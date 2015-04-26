@@ -1,0 +1,10 @@
+[WORLD]
+x-dimension=1000
+y-dimension=600
+background-image=../FlyingStickman/assets/yellow-paper-crop.png
+background-speed=10
+
+[PLAYER]
+player-image=../FlyingStickman/assets/walker_trans.gif
+player-size=normal
+x-initial=100
