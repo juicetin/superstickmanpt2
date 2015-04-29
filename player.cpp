@@ -84,6 +84,8 @@ void Player::pause(bool paused) {
     m_playerAnimation->setPaused(paused);
 }
 
+//ADDED - ALL BELOW
+
 //Increments the player's x-coordinate by some amount
 void Player::movePlayerX(int amount)
 {

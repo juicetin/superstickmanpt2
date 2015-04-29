@@ -33,11 +33,12 @@ protected:
     std::string m_imagePath;
     std::string m_size;
     int m_initialXPosition;
-    bool m_jump_ascend;
-    bool m_jumping;
-
     QMovie * m_playerAnimation;
     QLabel * m_label;
+
+    //ADDED
+    bool m_jump_ascend;
+    bool m_jumping;
 
 };
 
