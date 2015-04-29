@@ -3,7 +3,7 @@
 //Initialise fileIO for config file and build game
 ConcreteBuilder::ConcreteBuilder()
 {
-    gb_fileReader = new fileIO("../superstickman2/config.ini");
+    gb_fileReader = new fileIO("../superstickmanpt2/config.ini");
 
     if (gb_fileReader->wasSuccessful()) {
         m_wasSuccessful = true;

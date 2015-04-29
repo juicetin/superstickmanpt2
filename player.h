@@ -4,6 +4,7 @@
 #include <string>
 #include <QLabel>
 #include <QMovie>
+#include <QPainter>
 
 //Handles player variables and animation
 class Player
@@ -22,13 +23,18 @@ public:
     int getCurrentPosition() const;
 
     void beginPlayerAnimation(QWidget * dialog);
-    void movePlayer(int amount);
     void pause(bool paused);
+    void movePlayerX(int amount);
+
+    void set_jumping(bool asc_desc);
+    void jump(int time, QPainter &painter);
 
 protected:
     std::string m_imagePath;
     std::string m_size;
-    int m_initialPosition;
+    int m_initialXPosition;
+    bool m_jump_ascend;
+    bool m_jumping;
 
     QMovie * m_playerAnimation;
     QLabel * m_label;

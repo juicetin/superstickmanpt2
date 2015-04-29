@@ -55,6 +55,6 @@ void Background::renderBackground(QPainter &painter, bool animated) const
     painter.drawPixmap(m_position, 0, *m_backgroundImage);
     painter.drawPixmap(m_position + m_width, 0, *m_backgroundImage);
 
-
-
+    //Test
+    painter.drawRect(QRect(m_position+m_width+100, 300, 100, 100));
 }

@@ -4,9 +4,11 @@
 Player::Player(std::string imagePath, std::string size, int initialPosition)
     : m_imagePath(imagePath),
       m_size(size),
-      m_initialPosition(initialPosition)
+      m_initialXPosition(initialPosition)
 {
     m_playerAnimation = new QMovie(m_imagePath.c_str());
+    m_jump_ascend = true;
+    m_jumping = false;
 }
 
 Player::~Player()
@@ -53,7 +55,7 @@ void Player::setSize(const std::string &size)
 //Returns the initial player position as specified in the config file
 int Player::getInitialPosition() const
 {
-    return m_initialPosition;
+    return m_initialXPosition;
 }
 
 int Player::getCurrentPosition() const
@@ -71,20 +73,51 @@ void Player::beginPlayerAnimation(QWidget * dialog)
     m_playerAnimation->setScaledSize(QSize(playerSize, playerSize));
 
     //The second argument here is to account for the gap between the GIFs feet and the bottom of the image
-    m_label->setGeometry(m_initialPosition, 487-playerSize + 9*playerSize/1000, 150, playerSize);
+    m_label->setGeometry(m_initialXPosition, 487-playerSize + 9*playerSize/1000, 150, playerSize);
     m_label->setMovie(m_playerAnimation);
     m_playerAnimation->setSpeed(300);
     m_playerAnimation->start();
 }
 
-//Increments the player's x-coordinate by some amount
-void Player::movePlayer(int amount)
-{
-    m_label->move(m_label->x() + amount, m_label->y());
-
-}
-
 //Pauses and unpauses the player animation
 void Player::pause(bool paused) {
     m_playerAnimation->setPaused(paused);
+}
+
+//Increments the player's x-coordinate by some amount
+void Player::movePlayerX(int amount)
+{
+    m_label->move(m_label->x() + amount, m_label->y());
+}
+
+//Flag to indicate if player is in jumping trajectory
+void Player::set_jumping(bool asc_desc)
+{
+    m_jumping = asc_desc;
+}
+
+//Move player up or down as part of jumping
+void Player::jump(int time, QPainter &painter)
+{
+    int playerSize = getSize();
+    int current_ground = 487-playerSize + 9*playerSize/1000;
+
+    //Ascent of jump
+    //TODO - change hard coded jump cap
+    if (m_jumping && m_label->y() > 250 && m_jump_ascend)
+    {
+        m_label->move(m_label->x(), m_label->y()-(time%6));
+    }
+    //Descent of jump
+    else if (m_jumping && m_label->y() < current_ground)
+    {
+        m_jump_ascend = false;
+        m_label->move(m_label->x(), m_label->y()+(time%6));
+    }
+    //Reset jump related flags when jump is finished
+    else if (m_jumping)
+    {
+        m_jump_ascend = true;
+        m_jumping = false;
+    }
 }

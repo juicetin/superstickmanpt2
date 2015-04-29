@@ -24,7 +24,6 @@ Dialog::Dialog(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
     timer->start(32);
 
-
     //Construct the QLabel for displaying the character animation
 
 }
@@ -97,9 +96,12 @@ void Dialog::keyPressEvent(QKeyEvent *event)
 
     if (!m_paused) {
         if (event->key() == Qt::Key_Period) {
-            m_game->getPlayer()->movePlayer(2);
+            m_game->getPlayer()->movePlayerX(2);
         } else if (event->key() == Qt::Key_Comma) {
-            m_game->getPlayer()->movePlayer(-2);
+            m_game->getPlayer()->movePlayerX(-2);
+        } else if (event->key() == Qt::Key_Space) {
+            m_game->getPlayer()->set_jumping(true);
+//            m_game->getPlayer()->movePlayerY();
         }
     }
 }
@@ -110,4 +112,6 @@ void Dialog::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
     m_game->getBackground()->renderBackground(painter, !m_paused);
+    m_game->getPlayer()->jump(m_counter, painter);
+    m_counter++;
 }
