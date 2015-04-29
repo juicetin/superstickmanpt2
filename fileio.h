@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+
 #include "game.h"
 
 //Reads from and saves to the config file

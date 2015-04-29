@@ -20,12 +20,14 @@ Dialog::Dialog(QWidget *parent) :
     connect(quitButton, SIGNAL(released()), this, SLOT(handleQuitButton()));
 
     //Construct the timer and connect to the nextFrame slot
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(32);
+    m_timer = new QTimer(this);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
+    m_timer->start(32);
+
+    m_update_flag = false;
 
     //Construct the QLabel for displaying the character animation
-
+    //Idk where this went??? But it's working...
 }
 
 Dialog::~Dialog()
@@ -33,6 +35,9 @@ Dialog::~Dialog()
     delete ui;
     delete saveButton;
     delete quitButton;
+
+    //Added
+    delete m_timer;
 }
 
 //Sets the game pointer to the game constructed by the builder
@@ -61,6 +66,8 @@ void Dialog::nextFrame()
         saveButton->hide();
         quitButton->hide();
         update();
+        m_update_flag = true;
+//        m_update_flag = false;
     } else {
         saveButton->setGeometry(this->width()/3, this->height()/3, 100, 50);
         quitButton->setGeometry(2*this->width()/3 - 100, this->height()/3, 100, 50);
@@ -110,8 +117,9 @@ void Dialog::keyPressEvent(QKeyEvent *event)
 //Renders the background image
 void Dialog::paintEvent(QPaintEvent *event)
 {
+
     QPainter painter(this);
     m_game->getBackground()->renderBackground(painter, !m_paused);
-    m_game->getPlayer()->jump(m_counter, painter);
+    m_game->getPlayer()->jump(&m_update_flag, m_counter, painter);
     m_counter++;
 }

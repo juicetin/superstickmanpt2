@@ -6,6 +6,10 @@
 #include <QMovie>
 #include <QPainter>
 
+//Forward declaration.
+//Circular dependency otherwise
+class fileIO;
+
 //Handles player variables and animation
 class Player
 {
@@ -26,8 +30,9 @@ public:
     void pause(bool paused);
     void movePlayerX(int amount);
 
+    //ADDED
     void set_jumping(bool asc_desc);
-    void jump(int time, QPainter &painter);
+    void jump(bool *update_flag, int time, QPainter &painter);
 
 protected:
     std::string m_imagePath;

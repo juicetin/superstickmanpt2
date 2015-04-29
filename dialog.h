@@ -46,6 +46,9 @@ private:
     Game * m_game;
     fileIO * m_fileIO;
 
+    //Added
+    QTimer *m_timer;
+    bool m_update_flag;
 };
 
 #endif // DIALOG_H
