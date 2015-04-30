@@ -8,7 +8,7 @@
 
 //Forward declaration.
 //Circular dependency otherwise
-class fileIO;
+class FileIO;
 
 //Handles player variables and animation
 class Player
@@ -30,21 +30,12 @@ public:
     void pause(bool paused);
     void movePlayerX(int amount);
 
-    //ADDED
-    void set_jumping(bool asc_desc);
-    void jump(bool *update_flag, int time, QPainter &painter);
-
 protected:
     std::string m_imagePath;
     std::string m_size;
     int m_initialXPosition;
     QMovie * m_playerAnimation;
     QLabel * m_label;
-
-    //ADDED
-    bool m_jump_ascend;
-    bool m_jumping;
-
 };
 
 #endif // PLAYER_H

@@ -10,11 +10,11 @@
 
 //Reads from and saves to the config file
 //Stores key value pairs in map
-class fileIO
+class FileIO
 {
 public:
-    fileIO(const char* fileLocation);
-    ~fileIO();
+    FileIO(const char* fileLocation);
+    ~FileIO();
 
     int numberOfLines(const char* fileLocation);
 

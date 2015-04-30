@@ -4,9 +4,10 @@
 #include "background.h"
 #include "game.h"
 #include "player.h"
+#include "movingplayer.h"
 #include "fileio.h"
 
-//Handles fileIO and Game objects
+//Handles FileIO and Game objects
 class GameBuilder
 {
 public:
@@ -14,17 +15,17 @@ public:
     GameBuilder() {}
     virtual ~GameBuilder() {}
 
-    virtual Player * buildPlayer() = 0;
+    virtual MovingPlayer * buildPlayer() = 0;
     virtual Background * buildBackground() = 0;
     virtual Game * buildGame() = 0;
 
     virtual Game * getGame() = 0;
-    virtual fileIO * getFileIO() = 0;
+    virtual FileIO * getFileIO() = 0;
 
     virtual bool wasSuccessful() = 0;
 
 protected:
-    fileIO * gb_fileReader;
+    FileIO * gb_fileReader;
     bool m_wasSuccessful;
 
 };

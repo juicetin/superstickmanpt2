@@ -25,7 +25,7 @@ public:
     ~Dialog();
 
     void setGame(Game * game);
-    void setFileIO(fileIO * fileReader);
+    void setFileIO(FileIO * fileReader);
     void setSize(int width, int height);
 
 public slots:
@@ -44,7 +44,7 @@ private:
 
     QPushButton * saveButton, * quitButton;
     Game * m_game;
-    fileIO * m_fileIO;
+    FileIO * m_FileIO;
 
     //Added
     QTimer *m_timer;

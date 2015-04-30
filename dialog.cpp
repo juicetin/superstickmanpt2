@@ -48,9 +48,9 @@ void Dialog::setGame(Game *game)
     m_game->getPlayer()->beginPlayerAnimation(this);
 }
 
-void Dialog::setFileIO(fileIO *fileReader)
+void Dialog::setFileIO(FileIO *fileReader)
 {
-    m_fileIO = fileReader;
+    m_FileIO = fileReader;
 }
 
 //Resizes the dialog box
@@ -78,7 +78,7 @@ void Dialog::nextFrame()
 
 void Dialog::handleSaveButton()
 {
-    m_fileIO->saveGame(m_game);
+    m_FileIO->saveGame(m_game);
 }
 
 void Dialog::handleQuitButton()

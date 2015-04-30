@@ -2,15 +2,16 @@
 #define GAME_H
 
 #include "player.h"
+#include "movingplayer.h"
 #include "background.h"
 
 class Game
 {
 public:
-    Game(Player * player, Background * background, int xDimension, int yDimension);
+    Game(MovingPlayer * player, Background * background, int xDimension, int yDimension);
     ~Game();
 
-    Player * getPlayer();
+    MovingPlayer * getPlayer();
     Background * getBackground();
 
     const int& getXDimension() const;
@@ -20,7 +21,7 @@ public:
     void setYDimension(const int& yDimension);
 
 protected:
-    Player * m_player;
+    MovingPlayer * m_player;
     Background * m_background;
     int m_xDimension;
     int m_yDimension;

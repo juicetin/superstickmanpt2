@@ -1,7 +1,7 @@
 #include "fileio.h"
 
 //RAII - Opens file and processes data in one method on contruction
-fileIO::fileIO(const char* fileLocation)
+FileIO::FileIO(const char* fileLocation)
     : m_fileLocation(fileLocation)
 {
     std::string line;
@@ -33,13 +33,13 @@ fileIO::fileIO(const char* fileLocation)
 
 }
 
-fileIO::~fileIO()
+FileIO::~FileIO()
 {
 
 }
 
 //Skims through file to determine size of string array
-int fileIO::numberOfLines(const char *fileLocation)
+int FileIO::numberOfLines(const char *fileLocation)
 {
     int numLines = 0;
     std::string line;
@@ -70,7 +70,7 @@ int fileIO::numberOfLines(const char *fileLocation)
 }
 
 //Stores data as key-value pairs in map configValues
-int fileIO::processLines(std::string *lines, int numLines)
+int FileIO::processLines(std::string *lines, int numLines)
 {
     int index = 0;
     std::string section;
@@ -110,19 +110,19 @@ int fileIO::processLines(std::string *lines, int numLines)
 }
 
 //Returns the value matching the given key
-const char* fileIO::getValues(std::string key)
+const char* FileIO::getValues(std::string key)
 {
     return configValues[key].c_str();
 }
 
 //Returns true if file was opened successfully and contained valid data
-bool fileIO::wasSuccessful()
+bool FileIO::wasSuccessful()
 {
     return m_wasSuccessful;
 }
 
 //Saves the player's current position to the config file
-void fileIO::saveGame(Game * game)
+void FileIO::saveGame(Game * game)
 {
     std::ostringstream ss;
     ss << game->getPlayer()->getCurrentPosition();

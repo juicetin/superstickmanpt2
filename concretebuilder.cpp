@@ -1,9 +1,9 @@
 #include "concretebuilder.h"
 
-//Initialise fileIO for config file and build game
+//Initialise FileIO for config file and build game
 ConcreteBuilder::ConcreteBuilder()
 {
-    gb_fileReader = new fileIO("../superstickmanpt2/config.ini");
+    gb_fileReader = new FileIO("../superstickmanpt2/config.ini");
 
     if (gb_fileReader->wasSuccessful()) {
         m_wasSuccessful = true;
@@ -18,17 +18,21 @@ ConcreteBuilder::~ConcreteBuilder()
     delete gb_fileReader;
 }
 
-//Fetches values from fileIO object and constructs Player object
-Player * ConcreteBuilder::buildPlayer()
+//Fetches values from FileIO object and constructs Player object
+MovingPlayer * ConcreteBuilder::buildPlayer()
 {
     std::string imagePath = gb_fileReader->getValues("player-image");
     std::string playerSize = gb_fileReader->getValues("player-size");
     int initialPosition = atoi(gb_fileReader->getValues("x-initial"));
 
-    return new Player(imagePath, playerSize, initialPosition);
+    //Added - jump height
+    std::string jump_height_key = playerSize;
+    jump_height_key.append("-jumpheight");
+    int jumpHeight = atoi(gb_fileReader->getValues(jump_height_key));
+    return new MovingPlayer(imagePath, playerSize, initialPosition, jumpHeight);
 }
 
-//Fetches values from fileIO object and constructs Background object
+//Fetches values from FileIO object and constructs Background object
 Background * ConcreteBuilder::buildBackground()
 {
     std::string imagePath = gb_fileReader->getValues("background-image");
@@ -37,7 +41,7 @@ Background * ConcreteBuilder::buildBackground()
     return new Background(imagePath, scrollSpeed);
 }
 
-//Fetches values from fileIO object and constructs Game object from game components
+//Fetches values from FileIO object and constructs Game object from game components
 Game * ConcreteBuilder::buildGame()
 {
     int xDimension = atoi(gb_fileReader->getValues("x-dimension"));
@@ -52,7 +56,7 @@ Game * ConcreteBuilder::getGame()
     return m_game;
 }
 
-fileIO * ConcreteBuilder::getFileIO()
+FileIO * ConcreteBuilder::getFileIO()
 {
     return gb_fileReader;
 }

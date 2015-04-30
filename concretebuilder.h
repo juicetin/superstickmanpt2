@@ -12,14 +12,14 @@ public:
     ConcreteBuilder();
     ~ConcreteBuilder();
 
-    virtual Player * buildPlayer();
+    virtual MovingPlayer * buildPlayer();
 
     virtual Background * buildBackground();
 
     virtual Game * buildGame();
 
     Game * getGame();
-    fileIO * getFileIO();
+    FileIO * getFileIO();
 
     virtual bool wasSuccessful();
 
