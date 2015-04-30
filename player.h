@@ -30,12 +30,12 @@ public:
     void pause(bool paused);
     void movePlayerX(int amount);
 
+    QLabel * m_label;
 protected:
     std::string m_imagePath;
     std::string m_size;
     int m_initialXPosition;
     QMovie * m_playerAnimation;
-    QLabel * m_label;
 };
 
 #endif // PLAYER_H

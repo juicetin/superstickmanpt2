@@ -1,6 +1,8 @@
 #include "dialog.h"
 #include "ui_dialog.h"
 
+#include <iostream>
+
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog),
@@ -102,17 +104,22 @@ void Dialog::keyPressEvent(QKeyEvent *event)
     }
 
     if (!m_paused) {
-        if (event->key() == Qt::Key_Period) {
+        if (event->key() == Qt::Key_Period)
+        {
             m_game->getPlayer()->movePlayerX(2);
-        } else if (event->key() == Qt::Key_Comma) {
+        }
+        else if (event->key() == Qt::Key_Comma)
+        {
             m_game->getPlayer()->movePlayerX(-2);
-        } else if (event->key() == Qt::Key_Space) {
-            m_game->getPlayer()->set_jumping(true);
-//            m_game->getPlayer()->movePlayerY();
+        }
+        //Initiate jump sequence if not currently mid-jmp
+        else if (event->key() == Qt::Key_Space
+                   && !m_game->getPlayer()->is_jumping())
+        {
+           m_game->getPlayer()->set_jumping(true);
         }
     }
 }
-
 
 //Renders the background image
 void Dialog::paintEvent(QPaintEvent *event)

@@ -1,11 +1,18 @@
 #include "fileio.h"
 
+#include <cstdio>
+
 //RAII - Opens file and processes data in one method on contruction
 FileIO::FileIO(const char* fileLocation)
     : m_fileLocation(fileLocation)
 {
     std::string line;
     int numLines = numberOfLines(m_fileLocation);
+
+    valid_obstacle_properties["start-y"] = true;
+    valid_obstacle_properties["height"] = true;
+    valid_obstacle_properties["width"] = true;
+    valid_obstacle_properties["spacing"] = true;
 
     std::ifstream inputStream(m_fileLocation);
 
@@ -56,20 +63,50 @@ int FileIO::numberOfLines(const char *fileLocation)
     {
         while (getline(configFile, line))
         {
-            if (line[0] == '[') {
-
-            }
             numLines++;
         }
         configFile.close();
     } else {
         numLines = -1;
     }
-
     return numLines;
 }
 
-//Stores data as key-value pairs in map configValues
+//ADDED - Stores an obstacle item
+int FileIO::storeObstacleData(std::string value, std::string key)
+{
+    std::map<std::string, int> obstacle;
+    std::vector<std::string> obstacle_properties;
+    std::stringstream ss(value);
+    std::string item;
+    int property_count = 0;
+    while (std::getline(ss, item, ','))
+    {
+        property_count++;
+        std::string property_key = item.substr(0, item.find(":"));
+        int property_value = atoi(item.substr(item.find(":") + 1, item.length()).c_str());
+        obstacle[property_key] = property_value;
+        if (property_key.length() <= 0 ||
+                valid_obstacle_properties[property_key] != true)
+        {
+            std::cerr << "Invalid obstacle property" << std::endl;
+            return -1;
+        }
+        else if (property_value <= 0)
+        {
+            std::cerr << "Invalid obstacle property value" << std::endl;
+            return -1;
+        }
+    }
+    if (property_count < 4)
+    {
+        return -1;
+    }
+    obstaclesProperties.push_back(std::make_pair(key, obstacle));
+    return 0;
+}
+
+//Changed - Stores data as key-value pairs in map configValues
 int FileIO::processLines(std::string *lines, int numLines)
 {
     int index = 0;
@@ -85,12 +122,23 @@ int FileIO::processLines(std::string *lines, int numLines)
         } else {
             std::string key;
             std::string value;
+
             key = lines[index].substr(0, lines[index].find('='));
             value = lines[index].substr(lines[index].find('=') + 1, lines[index].length());
 
             if (key.length() > 0 && value.length() > 0) {
 
-                configValues[key] = value;
+                //Modified for obstacles
+                std::size_t found = key.find("obstacle");
+                if (found == std::string::npos) {
+                    configValues[key] = value;
+                } else {
+                    if (storeObstacleData(value, key) != 0)
+                    {
+                        std::cerr << "Terminated due to invalid obstacle config data: see above" << std::endl;
+                        return -1;
+                    }
+                }
                 numberOfConfigurations++;
 
             } else if (key.length() > 0 && value.length() <= 0) {
@@ -100,12 +148,8 @@ int FileIO::processLines(std::string *lines, int numLines)
 
             }
         }
-
         index++;
-
-
     }
-
     return 0;
 }
 

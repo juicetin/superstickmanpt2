@@ -5,6 +5,9 @@
 #include <iostream>
 #include <fstream>
 #include <map>
+#include <vector>
+#include <string>
+#include <sstream>
 
 #include "game.h"
 
@@ -18,6 +21,9 @@ public:
 
     int numberOfLines(const char* fileLocation);
 
+    //Added
+    int storeObstacleData(std::string value, std::string key);
+
     int processLines(std::string* lines, int numLines);
 
     const char* getValues(std::string key);
@@ -28,13 +34,12 @@ public:
 
 protected:
     const char* m_fileLocation;
-
-
     std::map <std::string, std::string> configValues;
-
-
-
     bool m_wasSuccessful;
+
+    //Added
+    std::vector <std::pair<std::string, std::map<std::string, int> > > obstaclesProperties;
+    std::map <std::string, bool> valid_obstacle_properties;
 };
 
 #endif // FILEIO_H

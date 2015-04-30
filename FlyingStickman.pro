@@ -30,6 +30,7 @@ HEADERS  += dialog.h \
     player.h \
     concretebuilder.h \
     game.h \
-    movingplayer.h
+    movingplayer.h \
+    fileioadapter.h
 
 FORMS    += dialog.ui

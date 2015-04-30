@@ -13,13 +13,14 @@ public:
 
     //ADDED
     void set_jumping(bool asc_desc);
+    bool is_jumping();
     void jump(bool *update_flag, int time, QPainter &painter);
 
 protected:
-    int m_jump_height;
-
     //ADDED
-    bool m_jump_ascend;
+    int m_velocity_y;
+    int m_gravity;
+    int m_jump_height;
     bool m_jumping;
 };
 
