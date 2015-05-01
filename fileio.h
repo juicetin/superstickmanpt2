@@ -8,8 +8,12 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <QMessageBox>
+#include <cmath>
 
 #include "game.h"
+
+typedef std::vector <std::pair<std::string, std::map<std::string, int> > > obstaclevector;
 
 //Reads from and saves to the config file
 //Stores key value pairs in map
@@ -21,7 +25,6 @@ public:
 
     int numberOfLines(const char* fileLocation);
 
-    //Added
     int storeObstacleData(std::string value, std::string key);
 
     int processLines(std::string* lines, int numLines);
@@ -32,14 +35,17 @@ public:
 
     void saveGame(Game * game);
 
+    //Added
+    obstaclevector getObstacleProperties();
+
 protected:
     const char* m_fileLocation;
     std::map <std::string, std::string> configValues;
     bool m_wasSuccessful;
 
     //Added
-    std::vector <std::pair<std::string, std::map<std::string, int> > > obstaclesProperties;
-    std::map <std::string, bool> valid_obstacle_properties;
+    obstaclevector m_obstaclesProperties;
+    std::map <std::string, bool> m_valid_obstacle_properties;
 };
 
 #endif // FILEIO_H

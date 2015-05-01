@@ -11,6 +11,9 @@ ConcreteBuilder::ConcreteBuilder()
     } else {
         m_wasSuccessful = false;
     }
+
+    ObstacleFactory test(gb_fileReader->getObstacleProperties());
+
 }
 
 ConcreteBuilder::~ConcreteBuilder()

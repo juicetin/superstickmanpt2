@@ -7,7 +7,7 @@ MovingPlayer::MovingPlayer(std::string imagePath, std::string size, int initialP
 {
     m_jumping = false;
     m_velocity_y = 0;
-    m_gravity = 3;
+    m_gravity = 4.9;
 }
 
 MovingPlayer::~MovingPlayer()
@@ -21,7 +21,7 @@ MovingPlayer::~MovingPlayer()
 void MovingPlayer::set_jumping(bool asc_desc)
 {
     m_jumping = asc_desc;
-    m_velocity_y = 30;
+    m_velocity_y = sqrt(2*m_gravity*m_jump_height);
 }
 
 bool MovingPlayer::is_jumping()

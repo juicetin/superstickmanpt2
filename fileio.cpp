@@ -9,10 +9,10 @@ FileIO::FileIO(const char* fileLocation)
     std::string line;
     int numLines = numberOfLines(m_fileLocation);
 
-    valid_obstacle_properties["start-y"] = true;
-    valid_obstacle_properties["height"] = true;
-    valid_obstacle_properties["width"] = true;
-    valid_obstacle_properties["spacing"] = true;
+    m_valid_obstacle_properties["start-y"] = true;
+    m_valid_obstacle_properties["height"] = true;
+    m_valid_obstacle_properties["width"] = true;
+    m_valid_obstacle_properties["spacing"] = true;
 
     std::ifstream inputStream(m_fileLocation);
 
@@ -87,13 +87,25 @@ int FileIO::storeObstacleData(std::string value, std::string key)
         int property_value = atoi(item.substr(item.find(":") + 1, item.length()).c_str());
         obstacle[property_key] = property_value;
         if (property_key.length() <= 0 ||
-                valid_obstacle_properties[property_key] != true)
+                m_valid_obstacle_properties[property_key] != true)
         {
-            std::cerr << "Invalid obstacle property" << std::endl;
+            QMessageBox msgBox;
+            std::string error = "Invalid obstacle property: ";
+            error.append(property_key);
+            msgBox.setText(error.c_str());
+            msgBox.exec();
+            std::cerr << "Invalid obstacle property " << property_key << std::endl;
             return -1;
         }
         else if (property_value <= 0)
         {
+            QMessageBox msgBox;
+            std::string error = "Invalid obstacle value: [";
+            error.append(item.substr(item.find(":") + 1, item.length()).c_str())
+                    .append("] for obstacle property: ")
+                    .append(property_key);
+            msgBox.setText(error.c_str());
+            msgBox.exec();
             std::cerr << "Invalid obstacle property value" << std::endl;
             return -1;
         }
@@ -102,8 +114,13 @@ int FileIO::storeObstacleData(std::string value, std::string key)
     {
         return -1;
     }
-    obstaclesProperties.push_back(std::make_pair(key, obstacle));
+    m_obstaclesProperties.push_back(std::make_pair(key, obstacle));
     return 0;
+}
+
+obstaclevector FileIO::getObstacleProperties()
+{
+    return m_obstaclesProperties;
 }
 
 //Changed - Stores data as key-value pairs in map configValues

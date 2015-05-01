@@ -4,6 +4,7 @@
 #include <cstdlib>
 
 #include "gamebuilder.h"
+#include "obstaclefactory.h"
 
 //Inherits the abstract Gamebuilder class, and keeps track of the created Game object
 class ConcreteBuilder : public GameBuilder
