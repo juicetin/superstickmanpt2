@@ -2,12 +2,11 @@
 
 #include <iostream>
 
-MovingPlayer::MovingPlayer(std::string imagePath, std::string size, int initialPosition, int jump_height) :
-    Player(imagePath, size, initialPosition), m_jump_height(jump_height)
+MovingPlayer::MovingPlayer(std::string imagePath, std::string size, int initialPosition, int initial_jump_velocity, int gravity) :
+    Player(imagePath, size, initialPosition), m_initial_jump_velocity(initial_jump_velocity), m_gravity(gravity)
 {
     m_jumping = false;
     m_velocity_y = 0;
-    m_gravity = 4.9;
 }
 
 MovingPlayer::~MovingPlayer()
@@ -21,7 +20,7 @@ MovingPlayer::~MovingPlayer()
 void MovingPlayer::set_jumping(bool asc_desc)
 {
     m_jumping = asc_desc;
-    m_velocity_y = sqrt(2*m_gravity*m_jump_height);
+    m_velocity_y = m_initial_jump_velocity;
 }
 
 bool MovingPlayer::is_jumping()
@@ -30,11 +29,10 @@ bool MovingPlayer::is_jumping()
 }
 
 //Move player up or down as part of jumping
-void MovingPlayer::jump(bool *update_flag, int time, QPainter &painter)
+void MovingPlayer::jump(bool update_flag, QPainter &painter)
 {
-    if (*update_flag)
+    if (update_flag)
     {
-        *update_flag = false;
         int playerSize = getSize();
 
         //TODO Hard coded - will need to change for obstacle detection
@@ -59,7 +57,6 @@ void MovingPlayer::jump(bool *update_flag, int time, QPainter &painter)
         //Reset jump related flags when jump is finished
         else if (m_jumping)
         {
-            std::cout << "finished jumping\n";
             m_jumping = false;
         }
     }

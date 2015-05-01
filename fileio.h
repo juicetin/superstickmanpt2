@@ -25,7 +25,7 @@ public:
 
     int numberOfLines(const char* fileLocation);
 
-    int storeObstacleData(std::string value, std::string key);
+    int storeObstacleData(std::string data);
 
     int processLines(std::string* lines, int numLines);
 
@@ -36,7 +36,7 @@ public:
     void saveGame(Game * game);
 
     //Added
-    obstaclevector getObstacleProperties();
+    std::vector<std::map<std::string, int> > getObstacleProperties();
 
 protected:
     const char* m_fileLocation;
@@ -44,7 +44,7 @@ protected:
     bool m_wasSuccessful;
 
     //Added
-    obstaclevector m_obstaclesProperties;
+    std::vector<std::map<std::string, int> > m_obstaclesProperties;
     std::map <std::string, bool> m_valid_obstacle_properties;
 };
 

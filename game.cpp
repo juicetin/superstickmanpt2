@@ -1,8 +1,9 @@
 #include "game.h"
 
-Game::Game(MovingPlayer * player, Background * background, int xDimension, int yDimension)
+Game::Game(MovingPlayer * player, Background * background, ObstacleCollection * obstacles, int xDimension, int yDimension)
     : m_player(player),
       m_background(background),
+      m_obstacles(obstacles),
       m_xDimension(xDimension),
       m_yDimension(yDimension)
 {
@@ -24,6 +25,11 @@ MovingPlayer * Game::getPlayer()
 Background * Game::getBackground()
 {
     return m_background;
+}
+
+ObstacleCollection * Game::getObstacles()
+{
+    return m_obstacles;
 }
 
 //Returns the game window width

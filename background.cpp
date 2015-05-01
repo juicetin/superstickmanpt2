@@ -43,18 +43,17 @@ void Background::setScrollSpeed(int scrollSpeed)
 
 //Takes QPainter reference to draw the background image.
 //Tiles two separate image to scroll seamlessly.
-void Background::renderBackground(QPainter &painter, bool animated) const
+void Background::renderBackground(bool updateFlag, QPainter &painter, bool animated) const
 {
-    if (animated) {
+    if (animated && updateFlag)
+    {
         m_position -= m_scrollSpeed;
-        if (m_position + m_width <= 0) {
+        if (m_position + m_width <= 0)
+        {
             m_position += m_width;
         }
     }
 
     painter.drawPixmap(m_position, 0, *m_backgroundImage);
     painter.drawPixmap(m_position + m_width, 0, *m_backgroundImage);
-
-    //Test
-    painter.drawRect(QRect(m_position+m_width+100, 300, 100, 100));
 }

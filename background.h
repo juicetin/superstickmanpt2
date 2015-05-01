@@ -17,7 +17,7 @@ public:
     const int& getScrollSpeed() const;
     void setScrollSpeed(int scrollSpeed);
 
-    void renderBackground(QPainter &painter, bool animated) const;
+    void renderBackground(bool updateFlag, QPainter &painter, bool animated) const;
 
 protected:
     std::string m_imagePath;

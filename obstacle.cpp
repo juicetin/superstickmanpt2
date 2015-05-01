@@ -1,44 +1,26 @@
 #include "obstacle.h"
 
-Obstacle::Obstacle()
+Obstacle::Obstacle(int y, int spacing) : m_y(y), m_spacing(spacing)
 {
 
 }
 
-int Obstacle::setStartY(int start_y)
+int Obstacle::getY() const
 {
-	m_start_y = start_y;
-}
-int Obstacle::getStartY() const
-{
-    return m_start_y;
+    return m_y;
 }
 
-int Obstacle::setHeight(int height)
-{
-    m_height = height;
-}
-int Obstacle::getHeight() const
-{
-    return m_height;
-}
-
-int Obstacle::setWidth(int width)
-{
-    m_width = width;
-}
-int Obstacle::getWidth() const
-{
-    return m_width;
-}
-
-int Obstacle::setSpacing(int spacing)
-{
-    m_spacing = spacing;
-}
 int Obstacle::getSpacing() const
 {
     return m_spacing;
 }
 
+int Obstacle::getX() const
+{
+	return m_x;
+}
 
+void Obstacle::setX(int x)
+{
+	m_x = x;
+}

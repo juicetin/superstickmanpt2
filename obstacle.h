@@ -5,23 +5,16 @@
 class Obstacle
 {
 public:
-    Obstacle();
-    int setStartY(int start_y);
-    int getStartY() const;
+    Obstacle(int start_y, int spacing);
 
-    int setHeight(int height);
-    int getHeight() const;
-
-    int setWidth(int width);
-    int getWidth() const;
-
-    int setSpacing(int spacing);
+    int getY() const;
     int getSpacing() const;
+    int getX() const;
+    void setX(int x);
 
 protected:
-    int m_start_y;
-    int m_height;
-    int m_width;
+    int m_y;
+    int m_x;
     int m_spacing;
 };
 

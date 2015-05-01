@@ -1,19 +1,17 @@
 #include "concretebuilder.h"
 
+#include <cstdio>
+
 //Initialise FileIO for config file and build game
 ConcreteBuilder::ConcreteBuilder()
 {
     gb_fileReader = new FileIO("../superstickmanpt2/config.ini");
-
     if (gb_fileReader->wasSuccessful()) {
         m_wasSuccessful = true;
         m_game = buildGame();
     } else {
         m_wasSuccessful = false;
     }
-
-    ObstacleFactory test(gb_fileReader->getObstacleProperties());
-
 }
 
 ConcreteBuilder::~ConcreteBuilder()
@@ -27,12 +25,9 @@ MovingPlayer * ConcreteBuilder::buildPlayer()
     std::string imagePath = gb_fileReader->getValues("player-image");
     std::string playerSize = gb_fileReader->getValues("player-size");
     int initialPosition = atoi(gb_fileReader->getValues("x-initial"));
-
-    //Added - jump height
-    std::string jump_height_key = playerSize;
-    jump_height_key.append("-jumpheight");
-    int jumpHeight = atoi(gb_fileReader->getValues(jump_height_key));
-    return new MovingPlayer(imagePath, playerSize, initialPosition, jumpHeight);
+    int initialJumpVelocity = atoi(gb_fileReader->getValues("initial-jump-velocity"));
+    int gravity = atoi(gb_fileReader->getValues("gravity"));
+    return new MovingPlayer(imagePath, playerSize, initialPosition, initialJumpVelocity, gravity);
 }
 
 //Fetches values from FileIO object and constructs Background object
@@ -50,7 +45,14 @@ Game * ConcreteBuilder::buildGame()
     int xDimension = atoi(gb_fileReader->getValues("x-dimension"));
     int yDimension = atoi(gb_fileReader->getValues("y-dimension"));
 
-    return new Game(buildPlayer(), buildBackground(), xDimension, yDimension);
+    return new Game(buildPlayer(), buildBackground(), buildObstacles(), xDimension, yDimension);
+}
+
+ObstacleCollection * ConcreteBuilder::buildObstacles()
+{
+    return new ObstacleCollection(gb_fileReader->getObstacleProperties(),
+                                  atoi(gb_fileReader->getValues("obstacle-speed")),
+                                  atoi(gb_fileReader->getValues("x-dimension")));
 }
 
 //Returns a pointer to the Game object

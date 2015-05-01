@@ -69,7 +69,6 @@ void Dialog::nextFrame()
         quitButton->hide();
         update();
         m_update_flag = true;
-//        m_update_flag = false;
     } else {
         saveButton->setGeometry(this->width()/3, this->height()/3, 100, 50);
         quitButton->setGeometry(2*this->width()/3 - 100, this->height()/3, 100, 50);
@@ -126,7 +125,9 @@ void Dialog::paintEvent(QPaintEvent *event)
 {
 
     QPainter painter(this);
-    m_game->getBackground()->renderBackground(painter, !m_paused);
-    m_game->getPlayer()->jump(&m_update_flag, m_counter, painter);
+    m_game->getBackground()->renderBackground(m_update_flag, painter, !m_paused);
+    m_game->getPlayer()->jump(m_update_flag, painter);
+    m_game->getObstacles()->renderObstacles(m_update_flag, painter, !m_paused);
+    m_update_flag = false;
     m_counter++;
 }

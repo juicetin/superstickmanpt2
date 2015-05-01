@@ -73,11 +73,10 @@ int FileIO::numberOfLines(const char *fileLocation)
 }
 
 //ADDED - Stores an obstacle item
-int FileIO::storeObstacleData(std::string value, std::string key)
+int FileIO::storeObstacleData(std::string data)
 {
     std::map<std::string, int> obstacle;
-    std::vector<std::string> obstacle_properties;
-    std::stringstream ss(value);
+    std::stringstream ss(data);
     std::string item;
     int property_count = 0;
     while (std::getline(ss, item, ','))
@@ -85,7 +84,7 @@ int FileIO::storeObstacleData(std::string value, std::string key)
         property_count++;
         std::string property_key = item.substr(0, item.find(":"));
         int property_value = atoi(item.substr(item.find(":") + 1, item.length()).c_str());
-        obstacle[property_key] = property_value;
+       obstacle[property_key] = property_value;
         if (property_key.length() <= 0 ||
                 m_valid_obstacle_properties[property_key] != true)
         {
@@ -114,11 +113,11 @@ int FileIO::storeObstacleData(std::string value, std::string key)
     {
         return -1;
     }
-    m_obstaclesProperties.push_back(std::make_pair(key, obstacle));
+    m_obstaclesProperties.push_back(obstacle);
     return 0;
 }
 
-obstaclevector FileIO::getObstacleProperties()
+std::vector<std::map<std::string, int> > FileIO::getObstacleProperties()
 {
     return m_obstaclesProperties;
 }
@@ -136,33 +135,33 @@ int FileIO::processLines(std::string *lines, int numLines)
             section = lines[index];
             index++;
             continue;
-        } else {
-            std::string key;
-            std::string value;
+        }
+        else
+        {
+            if (section.compare("[Obstacle-list]") != 0)
+            {
+                std::string key;
+                std::string value;
+                key = lines[index].substr(0, lines[index].find('='));
+                value = lines[index].substr(lines[index].find('=') + 1, lines[index].length());
 
-            key = lines[index].substr(0, lines[index].find('='));
-            value = lines[index].substr(lines[index].find('=') + 1, lines[index].length());
-
-            if (key.length() > 0 && value.length() > 0) {
-
-                //Modified for obstacles
-                std::size_t found = key.find("obstacle");
-                if (found == std::string::npos) {
+                if (key.length() > 0 && value.length() > 0) {
                     configValues[key] = value;
-                } else {
-                    if (storeObstacleData(value, key) != 0)
-                    {
-                        std::cerr << "Terminated due to invalid obstacle config data: see above" << std::endl;
-                        return -1;
-                    }
+                    numberOfConfigurations++;
                 }
-                numberOfConfigurations++;
-
-            } else if (key.length() > 0 && value.length() <= 0) {
-                std::cerr << "Invalid Config Data" << std::endl;
-                return -1;
-            } else {
-
+                else if (key.length() > 0 && value.length() <= 0)
+                {
+                    std::cerr << "Invalid Config Data" << std::endl;
+                    return -1;
+                }
+            }
+            //Obstacles parsing block
+            else
+            {
+                if (storeObstacleData(lines[index]) != 0)
+                {
+                    return -1;
+                }
             }
         }
         index++;

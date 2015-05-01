@@ -4,11 +4,12 @@
 #include "player.h"
 #include "movingplayer.h"
 #include "background.h"
+#include "obstaclecollection.h"
 
 class Game
 {
 public:
-    Game(MovingPlayer * player, Background * background, int xDimension, int yDimension);
+    Game(MovingPlayer * player, Background * background, ObstacleCollection * obstacles, int xDimension, int yDimension);
     ~Game();
 
     MovingPlayer * getPlayer();
@@ -20,9 +21,13 @@ public:
     const int& getYDimension() const;
     void setYDimension(const int& yDimension);
 
+    ObstacleCollection * getObstacles();
+
 protected:
     MovingPlayer * m_player;
     Background * m_background;
+    ObstacleCollection * m_obstacles;
+
     int m_xDimension;
     int m_yDimension;
 

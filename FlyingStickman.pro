@@ -21,8 +21,9 @@ SOURCES += main.cpp\
     concretebuilder.cpp \
     game.cpp \
     movingplayer.cpp \
-    obstaclefactory.cpp \
-    obstacle.cpp
+    obstacle.cpp \
+    obstaclecollection.cpp \
+    obstaclerectangle.cpp
 
 HEADERS  += dialog.h \
     fileio.h \
@@ -34,7 +35,8 @@ HEADERS  += dialog.h \
     game.h \
     movingplayer.h \
     fileioadapter.h \
-    obstaclefactory.h \
-    obstacle.h
+    obstacle.h \
+    obstaclecollection.h \
+    obstaclerectangle.h
 
 FORMS    += dialog.ui
