@@ -3,8 +3,8 @@
 
 //Constructs background object and Pixmap for representing background image
 Background::Background(std::string imagePath, int scrollSpeed)
-    : m_imagePath(imagePath),
-      m_scrollSpeed(scrollSpeed)
+: m_imagePath(imagePath),
+m_scrollSpeed(scrollSpeed)
 {
     m_backgroundImage = new QPixmap(m_imagePath.c_str());
     m_height = m_backgroundImage->height();
@@ -47,13 +47,21 @@ void Background::renderBackground(bool updateFlag, QPainter &painter, bool anima
 {
     if (animated && updateFlag)
     {
-        m_position -= m_scrollSpeed;
-        if (m_position + m_width <= 0)
+        if (!(*m_collision))
         {
-            m_position += m_width;
+            m_position -= m_scrollSpeed;
+            if (m_position + m_width <= 0)
+            {
+                m_position += m_width;
+            }
         }
     }
 
     painter.drawPixmap(m_position, 0, *m_backgroundImage);
     painter.drawPixmap(m_position + m_width, 0, *m_backgroundImage);
+}
+
+void Background::setCollision(bool * collision)
+{
+    m_collision = collision;
 }

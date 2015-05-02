@@ -13,6 +13,7 @@ FileIO::FileIO(const char* fileLocation)
     m_valid_obstacle_properties["height"] = true;
     m_valid_obstacle_properties["width"] = true;
     m_valid_obstacle_properties["spacing"] = true;
+    m_valid_obstacle_properties["type"] = true;
 
     std::ifstream inputStream(m_fileLocation);
 
@@ -96,7 +97,7 @@ int FileIO::storeObstacleData(std::string data)
             std::cerr << "Invalid obstacle property " << property_key << std::endl;
             return -1;
         }
-        else if (property_value <= 0)
+        else if (property_value < 0)
         {
             QMessageBox msgBox;
             std::string error = "Invalid obstacle value: [";
@@ -109,7 +110,7 @@ int FileIO::storeObstacleData(std::string data)
             return -1;
         }
     }
-    if (property_count < 4)
+    if (property_count < 5)
     {
         return -1;
     }
@@ -131,7 +132,12 @@ int FileIO::processLines(std::string *lines, int numLines)
 
     while (index < numLines)
     {
-        if (lines[index][0] == '[') {
+        if (lines[index][0] == '-' && lines[index][1] == '-')
+        {
+            index++;
+            continue;
+        }
+        else if (lines[index][0] == '[') {
             section = lines[index];
             index++;
             continue;
@@ -201,5 +207,6 @@ void FileIO::saveGame(Game * game)
     outStream << "player-image=" << configValues["player-image"] << std::endl;
     outStream << "player-size=" << configValues["player-size"] << std::endl;
     outStream << "x-initial=" << configValues["x-initial"] << std::endl;
+
 
 }

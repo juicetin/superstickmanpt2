@@ -19,6 +19,8 @@ public:
 
     void renderBackground(bool updateFlag, QPainter &painter, bool animated) const;
 
+    void setCollision(bool * collision);
+
 protected:
     std::string m_imagePath;
     int m_scrollSpeed;
@@ -26,6 +28,8 @@ protected:
     mutable int m_position;
     int m_height;
     int m_width;
+
+    bool * m_collision;
 
     QPixmap * m_backgroundImage;
 };

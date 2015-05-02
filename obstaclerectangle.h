@@ -6,9 +6,11 @@
 class ObstacleRectangle : public Obstacle
 {
 public:
-    ObstacleRectangle(int y, int spacing, int m_height, int m_width);
+    ObstacleRectangle(obstacleInfo obstacle_info, gameInfo *game_info);
     int getHeight() const;
     int getWidth() const;
+    virtual void draw(QPainter &painter, bool collision);
+    virtual void updatePosition();
 
 protected:
 	int m_height;

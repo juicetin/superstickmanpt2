@@ -9,7 +9,7 @@
 class Game
 {
 public:
-    Game(MovingPlayer * player, Background * background, ObstacleCollection * obstacles, int xDimension, int yDimension);
+    Game(ObstacleCollection * obstacles, MovingPlayer * player, Background * background, int xDimension, int yDimension);
     ~Game();
 
     MovingPlayer * getPlayer();

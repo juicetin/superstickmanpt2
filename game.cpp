@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game::Game(MovingPlayer * player, Background * background, ObstacleCollection * obstacles, int xDimension, int yDimension)
+Game::Game(ObstacleCollection * obstacles, MovingPlayer * player, Background * background, int xDimension, int yDimension)
     : m_player(player),
       m_background(background),
       m_obstacles(obstacles),

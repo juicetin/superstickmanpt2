@@ -1,6 +1,8 @@
 #include "obstacle.h"
 
-Obstacle::Obstacle(int y, int spacing) : m_y(y), m_spacing(spacing)
+Obstacle::Obstacle(obstacleInfo obstacle_info, gameInfo *game_info) :
+	m_y(obstacle_info.start_y), m_spacing(obstacle_info.spacing),
+    m_speed(obstacle_info.speed), m_game_info(game_info)
 {
 
 }

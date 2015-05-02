@@ -22,12 +22,16 @@ ConcreteBuilder::~ConcreteBuilder()
 //Fetches values from FileIO object and constructs Player object
 MovingPlayer * ConcreteBuilder::buildPlayer()
 {
-    std::string imagePath = gb_fileReader->getValues("player-image");
-    std::string playerSize = gb_fileReader->getValues("player-size");
-    int initialPosition = atoi(gb_fileReader->getValues("x-initial"));
-    int initialJumpVelocity = atoi(gb_fileReader->getValues("initial-jump-velocity"));
-    int gravity = atoi(gb_fileReader->getValues("gravity"));
-    return new MovingPlayer(imagePath, playerSize, initialPosition, initialJumpVelocity, gravity);
+    gameInfo game_info;
+
+    game_info.image_path = gb_fileReader->getValues("player-image");
+    game_info.size = gb_fileReader->getValues("player-size");
+    game_info.x_initial = atoi(gb_fileReader->getValues("x-initial"));
+    game_info.initial_jump_velocity = atoi(gb_fileReader->getValues("initial-jump-velocity"));
+    game_info.gravity = atoi(gb_fileReader->getValues("gravity"));
+    game_info.y_dimension = atoi(gb_fileReader->getValues("y-dimension"));
+
+    return new MovingPlayer(game_info);
 }
 
 //Fetches values from FileIO object and constructs Background object
@@ -45,14 +49,17 @@ Game * ConcreteBuilder::buildGame()
     int xDimension = atoi(gb_fileReader->getValues("x-dimension"));
     int yDimension = atoi(gb_fileReader->getValues("y-dimension"));
 
-    return new Game(buildPlayer(), buildBackground(), buildObstacles(), xDimension, yDimension);
+    return new Game(buildObstacles(), buildPlayer(), buildBackground(), xDimension, yDimension);
 }
 
 ObstacleCollection * ConcreteBuilder::buildObstacles()
 {
-    return new ObstacleCollection(gb_fileReader->getObstacleProperties(),
-                                  atoi(gb_fileReader->getValues("obstacle-speed")),
-                                  atoi(gb_fileReader->getValues("x-dimension")));
+    gameInfo game_info;
+    game_info.obstacle_speed = atoi(gb_fileReader->getValues("obstacle-speed"));
+    game_info.x_dimension = atoi(gb_fileReader->getValues("x-dimension"));
+    game_info.y_dimension = atoi(gb_fileReader->getValues("y-dimension"));
+
+    return new ObstacleCollection(gb_fileReader->getObstacleProperties(), game_info);
 }
 
 //Returns a pointer to the Game object

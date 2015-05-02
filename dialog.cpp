@@ -18,6 +18,8 @@ Dialog::Dialog(QWidget *parent) :
     quitButton = new QPushButton(this);
     saveButton->setText("Save");
     quitButton->setText("Quit");
+//    saveButton->setFocusPolicy(Qt::NoFocus);
+//    quitButton->setFocusPolicy(Qt::NoFocus);
     connect(saveButton, SIGNAL(released()), this, SLOT(handleSaveButton()));
     connect(quitButton, SIGNAL(released()), this, SLOT(handleQuitButton()));
 
@@ -30,6 +32,8 @@ Dialog::Dialog(QWidget *parent) :
 
     //Construct the QLabel for displaying the character animation
     //Idk where this went??? But it's working...
+
+
 }
 
 Dialog::~Dialog()
@@ -48,6 +52,15 @@ void Dialog::setGame(Game *game)
     m_game = game;
     setSize(m_game->getXDimension(), m_game->getYDimension());
     m_game->getPlayer()->beginPlayerAnimation(this);
+
+    m_game->getPlayer()->set_obstacle_list_pointer(
+                m_game->getObstacles()->getObstacles());
+
+    m_game->getBackground()->setCollision(
+        m_game->getPlayer()->get_collision());
+
+    m_game->getObstacles()->setCollision(
+        m_game->getPlayer()->get_collision());
 }
 
 void Dialog::setFileIO(FileIO *fileReader)
@@ -113,7 +126,7 @@ void Dialog::keyPressEvent(QKeyEvent *event)
         }
         //Initiate jump sequence if not currently mid-jmp
         else if (event->key() == Qt::Key_Space
-                   && !m_game->getPlayer()->is_jumping())
+                   /*&& !m_game->getPlayer()->is_jumping()*/)
         {
            m_game->getPlayer()->set_jumping(true);
         }
@@ -125,8 +138,8 @@ void Dialog::paintEvent(QPaintEvent *event)
 {
 
     QPainter painter(this);
-    m_game->getBackground()->renderBackground(m_update_flag, painter, !m_paused);
     m_game->getPlayer()->jump(m_update_flag, painter);
+    m_game->getBackground()->renderBackground(m_update_flag, painter, !m_paused);
     m_game->getObstacles()->renderObstacles(m_update_flag, painter, !m_paused);
     m_update_flag = false;
     m_counter++;
