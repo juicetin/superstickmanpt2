@@ -28,7 +28,7 @@ void Player::setImagePath(const std::string &imagePath)
 }
 
 //Returns the size of the player mapped to integer values
-int Player::getSize() const
+int Player::getHeight() const
 {
     if (m_size == "tiny") {
         return 50;
@@ -38,6 +38,21 @@ int Player::getSize() const
         return 120;
     } else if (m_size == "giant") {
         return 180;
+    } else {
+        return -1;
+    }
+}
+
+int Player::getWidth() const
+{
+    if (m_size == "tiny") {
+        return 60;
+    } else if (m_size == "normal") {
+        return 90;
+    } else if (m_size == "large") {
+        return 140;
+    } else if (m_size == "giant") {
+        return 160;
     } else {
         return -1;
     }
@@ -67,7 +82,7 @@ void Player::beginPlayerAnimation(QWidget * dialog)
     //Assign the QLabel to the given QDialog
     m_label = new QLabel(dialog);
 
-    int playerSize = getSize();
+    int playerSize = getHeight();
     m_playerAnimation->setScaledSize(QSize(playerSize, playerSize));
 
     //The second argument here is to account for the gap between the GIFs feet and the bottom of the image

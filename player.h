@@ -20,7 +20,8 @@ public:
     std::string getImagePath() const;
     void setImagePath(const std::string& imagePath);
 
-    int getSize() const;
+    int getHeight() const;
+    int getWidth() const;
     void setSize(const std::string& size);
 
     int getInitialPosition() const;
