@@ -14,6 +14,7 @@ FileIO::FileIO(const char* fileLocation)
     m_valid_obstacle_properties["width"] = true;
     m_valid_obstacle_properties["spacing"] = true;
     m_valid_obstacle_properties["type"] = true;
+    m_valid_obstacle_properties["color"] = true;
 
     std::ifstream inputStream(m_fileLocation);
 
@@ -81,7 +82,7 @@ int FileIO::storeObstacleData(std::string data)
         return 0;
     }
 
-    std::map<std::string, int> obstacle;
+    std::map<std::string, std::string> obstacle;
     std::stringstream ss(data);
     std::string item;
     int property_count = 0;
@@ -89,8 +90,8 @@ int FileIO::storeObstacleData(std::string data)
     {
         property_count++;
         std::string property_key = item.substr(0, item.find(":"));
-        int property_value = atoi(item.substr(item.find(":") + 1, item.length()).c_str());
-       obstacle[property_key] = property_value;
+         int property_value = atoi(item.substr(item.find(":") + 1, item.length()).c_str());
+        obstacle[property_key] = item.substr(item.find(":") + 1, item.length());
         if (property_key.length() <= 0 ||
                 m_valid_obstacle_properties[property_key] != true)
         {
@@ -123,7 +124,7 @@ int FileIO::storeObstacleData(std::string data)
     return 0;
 }
 
-std::vector<std::map<std::string, int> > FileIO::getObstacleProperties()
+std::vector<std::map<std::string, std::string> > FileIO::getObstacleProperties()
 {
     return m_obstaclesProperties;
 }
@@ -196,7 +197,7 @@ bool FileIO::wasSuccessful()
 void FileIO::saveGame(Game * game)
 {
     std::ostringstream ss;
-    ss << game->getPlayer()->getCurrentPosition();
+    ss << game->getPlayer()->m_moving_player.getCurrentPosition();
     configValues["x-initial"] = ss.str();
 
     std::ofstream outStream;
@@ -233,11 +234,11 @@ void FileIO::saveGame(Game * game)
 
     for (int i = 0; i < m_obstaclesProperties.size(); ++i)
     {
-        int type = m_obstaclesProperties[i]["type"];
-        int start_y = m_obstaclesProperties[i]["start-y"];
-        int height = m_obstaclesProperties[i]["height"];
-        int width = m_obstaclesProperties[i]["width"];
-        int spacing = m_obstaclesProperties[i]["spacing"];
+        std::string type = m_obstaclesProperties[i]["type"];
+        std::string start_y = m_obstaclesProperties[i]["start-y"];
+        std::string height = m_obstaclesProperties[i]["height"];
+        std::string width = m_obstaclesProperties[i]["width"];
+        std::string spacing = m_obstaclesProperties[i]["spacing"];
         outStream << "type:" << type << ",start-y:" << start_y << ",height:" << height << ",width:" << width << ",spacing:" << spacing << std::endl;
     }
 }

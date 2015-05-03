@@ -36,7 +36,7 @@ public:
     void saveGame(Game * game);
 
     //Added
-    std::vector<std::map<std::string, int> > getObstacleProperties();
+    std::vector<std::map<std::string, std::string> > getObstacleProperties();
 
 protected:
     const char* m_fileLocation;
@@ -44,7 +44,7 @@ protected:
     bool m_wasSuccessful;
 
     //Added
-    std::vector<std::map<std::string, int> > m_obstaclesProperties;
+    std::vector<std::map<std::string, std::string> > m_obstaclesProperties;
     std::map <std::string, bool> m_valid_obstacle_properties;
 };
 

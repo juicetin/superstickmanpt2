@@ -5,14 +5,16 @@
 #include "movingplayer.h"
 #include "background.h"
 #include "obstaclecollection.h"
+#include "movingplayerproxy.h"
 
 class Game
 {
 public:
-    Game(MovingPlayer * player, Background * background, int xDimension, int yDimension);
+    Game(MovingPlayerProxy * player, Background * background, int xDimension, int yDimension);
     ~Game();
 
-    MovingPlayer * getPlayer();
+//    MovingPlayer * getPlayer();
+    MovingPlayerProxy * getPlayer();
     Background * getBackground();
 
     const int& getXDimension() const;
@@ -25,7 +27,8 @@ public:
     ObstacleCollection * getObstacles();
 
 protected:
-    MovingPlayer * m_player;
+//    MovingPlayer * m_player;
+    MovingPlayerProxy * m_player;
     Background * m_background;
     ObstacleCollection * m_obstacles;
 

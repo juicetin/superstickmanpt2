@@ -13,7 +13,7 @@
 class ObstacleCollection
 {
 public:
-    ObstacleCollection(std::vector<std::map<std::string, int > > obstacles_vector, gameInfo game_info);
+    ObstacleCollection(std::vector<std::map<std::string, std::string > > obstacles_vector, gameInfo game_info);
     ~ObstacleCollection();
     void renderObstacles(bool update_flag, QPainter &painter, bool animated);
 

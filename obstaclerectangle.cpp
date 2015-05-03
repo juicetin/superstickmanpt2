@@ -32,7 +32,12 @@ void ObstacleRectangle::updatePosition()
 void ObstacleRectangle::draw(QPainter &painter, bool collision)
 {
     //This draws objects outside the window too!
-	painter.drawRect(QRect(m_x, m_y, m_width, m_height));
+
+    painter.setPen(QColor(m_obstacle_info.color.c_str()));
+    QBrush brush(QColor((m_obstacle_info.color.c_str())));
+    QRect rect(QRect(m_x, m_y, m_width, m_height));
+    painter.drawRect(rect);
+    painter.fillRect(rect, brush);
 	if (!collision)
 	{
 		updatePosition();

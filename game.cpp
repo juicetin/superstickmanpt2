@@ -1,6 +1,7 @@
 #include "game.h"
 
-Game::Game(MovingPlayer * player, Background * background, int xDimension, int yDimension)
+
+Game::Game(MovingPlayerProxy * player, Background * background, int xDimension, int yDimension)
     : m_player(player),
       m_background(background),
       m_xDimension(xDimension),
@@ -15,7 +16,7 @@ Game::~Game()
 }
 
 //Returns the game's player object
-MovingPlayer * Game::getPlayer()
+MovingPlayerProxy * Game::getPlayer()
 {
     return m_player;
 }

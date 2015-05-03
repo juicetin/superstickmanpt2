@@ -51,7 +51,7 @@ void Dialog::setGame(Game *game)
 {
     m_game = game;
     setSize(m_game->getXDimension(), m_game->getYDimension());
-    m_game->getPlayer()->beginPlayerAnimation(this);
+    m_game->getPlayer()->m_moving_player.beginPlayerAnimation(this);
 
 
 
@@ -61,14 +61,14 @@ void Dialog::setGame(Game *game)
     game_info.y_dimension = atoi(m_FileIO->getValues("y-dimension"));
     m_game->setObstacles(new ObstacleCollection(m_FileIO->getObstacleProperties(), game_info));
 
-    m_game->getPlayer()->set_obstacle_list_pointer(
+    m_game->getPlayer()->m_moving_player.set_obstacle_list_pointer(
                 m_game->getObstacles()->getObstacles());
 
     m_game->getBackground()->setCollision(
-        m_game->getPlayer()->get_collision());
+        m_game->getPlayer()->m_moving_player.get_collision());
 
     m_game->getObstacles()->setCollision(
-        m_game->getPlayer()->get_collision());
+        m_game->getPlayer()->m_moving_player.get_collision());
 
 }
 
@@ -118,10 +118,10 @@ void Dialog::keyPressEvent(QKeyEvent *event)
     //Pause Event
     if (event->key() == Qt::Key_P && !m_paused) {
         m_paused = true;
-        m_game->getPlayer()->pause(m_paused);
+        m_game->getPlayer()->m_moving_player.pause(m_paused);
     } else if (event->key() == Qt::Key_P && m_paused) {
         m_paused = false;
-        m_game->getPlayer()->pause(m_paused);
+        m_game->getPlayer()->m_moving_player.pause(m_paused);
     }
 
     if (!m_paused) {
@@ -129,18 +129,18 @@ void Dialog::keyPressEvent(QKeyEvent *event)
 
         if (event->key() == Qt::Key_Period)
         {
-            m_game->getPlayer()->movePlayerX(2);
+            m_game->getPlayer()->m_moving_player.movePlayerX(2);
         }
         else if (event->key() == Qt::Key_Comma)
         {
-            m_game->getPlayer()->movePlayerX(-2);
+            m_game->getPlayer()->m_moving_player.movePlayerX(-2);
         }
         //Initiate jump sequence if not currently mid-jmp
         else if (event->key() == Qt::Key_Space
-                   && !m_game->getPlayer()->is_jumping()
+                   && !m_game->getPlayer()->m_moving_player.is_jumping()
                    && strcmp(jump_flag.c_str(), "on") == 0)
         {
-           m_game->getPlayer()->set_jumping(true);
+           m_game->getPlayer()->m_moving_player.set_jumping(true);
         }
     }
 }
@@ -150,7 +150,7 @@ void Dialog::paintEvent(QPaintEvent *event)
 {
 
     QPainter painter(this);
-    m_game->getPlayer()->jump(m_update_flag, painter);
+    m_game->getPlayer()->m_moving_player.jump(m_update_flag, painter);
     m_game->getBackground()->renderBackground(m_update_flag, painter, !m_paused);
 
     std::string obst_flag = m_FileIO->getValues("obstacle-flag");

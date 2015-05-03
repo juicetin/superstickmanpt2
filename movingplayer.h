@@ -23,8 +23,9 @@ public:
 
     bool * get_collision();
     void collision_detection();
-	void relative_ground_level_detection();
+	inline void relative_ground_level_detection();
 	inline void drop_player();
+    bool in_screen();
 
     int get_player_bottom();
     int get_player_right();

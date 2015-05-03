@@ -5,6 +5,7 @@
 
 #include "gamebuilder.h"
 #include "gameinfo.h"
+#include "movingplayerproxy.h"
 
 //Inherits the abstract Gamebuilder class, and keeps track of the created Game object
 class ConcreteBuilder : public GameBuilder
@@ -13,7 +14,8 @@ public:
     ConcreteBuilder();
     ~ConcreteBuilder();
 
-    virtual MovingPlayer * buildPlayer();
+//    virtual MovingPlayer * buildPlayer();
+    virtual MovingPlayerProxy * buildPlayer();
 
     virtual Background * buildBackground();
 

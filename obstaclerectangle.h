@@ -1,7 +1,9 @@
 #ifndef OBSTACLERECTANGLE_H
 #define OBSTACLERECTANGLE_H
 
- #include "obstacle.h"
+#include <QBrush>
+#include <QColor>
+#include "obstacle.h"
 
 class ObstacleRectangle : public Obstacle
 {

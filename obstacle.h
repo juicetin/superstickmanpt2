@@ -26,6 +26,7 @@ protected:
     int m_spacing;
     int m_speed;
     gameInfo * m_game_info;
+    obstacleInfo m_obstacle_info;
 
 };
 

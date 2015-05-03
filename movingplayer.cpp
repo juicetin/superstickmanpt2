@@ -222,3 +222,13 @@ bool MovingPlayer::is_jumping()
 {
     return m_jumping;
 }
+
+bool MovingPlayer::in_screen()
+{
+    bool off_left = m_label->x() + getWidth() <= 0;
+    bool off_right = m_label->x() >= m_screen_width;
+    bool off_top = m_label->y() + getHeight() <= 0;
+    bool off_bottom = m_label->y() >= m_screen_height;
+
+    return !off_left && !off_right && !off_top && !off_bottom;
+}

@@ -6,6 +6,7 @@
 #include "player.h"
 #include "movingplayer.h"
 #include "fileio.h"
+#include "movingplayerproxy.h"
 
 //Handles FileIO and Game objects
 class GameBuilder
@@ -15,7 +16,8 @@ public:
     GameBuilder() {}
     virtual ~GameBuilder() {}
 
-    virtual MovingPlayer * buildPlayer() = 0;
+//    virtual MovingPlayer * buildPlayer() = 0;
+    virtual MovingPlayerProxy * buildPlayer() = 0;
     virtual Background * buildBackground() = 0;
     virtual Game * buildGame() = 0;
 

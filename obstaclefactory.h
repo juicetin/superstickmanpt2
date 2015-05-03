@@ -12,7 +12,7 @@
 class ObstacleFactory
 {
 public:
-    static Obstacle *create(std::map<std::string, int> obstacle_info_map, gameInfo *game_info);
+    static Obstacle *create(std::map<std::string, std::string> obstacle_info_map, gameInfo *game_info);
 };
 
 #endif // OBSTACLEFACTORY_H

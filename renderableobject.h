@@ -6,7 +6,7 @@
 class RenderableObject
 {
 public:
-    virtual void draw(QPainter &painter, bool collision) = 0;
+    virtual void draw(QPainter &painter, bool update_flag) = 0;
 };
 
 #endif // RENDERABLEOBJECT

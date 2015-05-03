@@ -4,7 +4,7 @@
 
 #include <cstdio>
 
-ObstacleCollection::ObstacleCollection(std::vector<std::map<std::string, int > > obstacles_vector, gameInfo game_info) :
+ObstacleCollection::ObstacleCollection(std::vector<std::map<std::string, std::string > > obstacles_vector, gameInfo game_info) :
 m_speed(game_info.obstacle_speed), m_width(game_info.x_dimension), m_height(game_info.y_dimension),
 m_game_info(game_info)
 {
