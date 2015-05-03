@@ -76,6 +76,11 @@ int FileIO::numberOfLines(const char *fileLocation)
 //ADDED - Stores an obstacle item
 int FileIO::storeObstacleData(std::string data)
 {
+    if (data.length() == 0)
+    {
+        return 0;
+    }
+
     std::map<std::string, int> obstacle;
     std::stringstream ss(data);
     std::string item;

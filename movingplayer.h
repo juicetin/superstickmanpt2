@@ -22,6 +22,9 @@ public:
     void set_obstacle_list_pointer(std::vector<Obstacle*> * obstacles);
 
     bool * get_collision();
+    void collision_detection();
+	void relative_ground_level_detection();
+	void drop_player();
 
     int get_player_bottom();
     int get_player_right();
