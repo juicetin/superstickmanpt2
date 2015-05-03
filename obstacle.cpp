@@ -31,3 +31,4 @@ void Obstacle::setSpacing(int spacing)
 {
 	m_spacing = spacing;
 }
+

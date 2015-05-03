@@ -26,7 +26,7 @@ void ObstacleRectangle::updatePosition()
 	else
 	{
 		m_x -= m_game_info->obstacle_speed;
-	}	
+    }
 }
 
 void ObstacleRectangle::draw(QPainter &painter, bool collision)

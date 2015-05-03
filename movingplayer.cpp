@@ -48,11 +48,22 @@ void MovingPlayer::collision_detection()
 
 
 
-    //Set next "relative ground level" once user ('s left) passes prev obstacle
-    if (m_prev_obst_index != -1 && get_player_right() > (*m_obstacles)[m_prev_obst_index]->getX()
-            + static_cast<ObstacleRectangle*>((*m_obstacles)[m_prev_obst_index])->getWidth())
+    int prev_obst_left = -1;
+    int prev_obst_width = -1;
+    int prev_obst_right = -1;
+    int prev_obst_spacing = -1;
+    if (m_prev_obst_index != -1)
     {
-        if (((*m_obstacles)[m_prev_obst_index]->getSpacing() > getWidth() && !m_collision && get_player_right() <= obst_left)
+        prev_obst_left = (*m_obstacles)[m_prev_obst_index]->getX();
+        prev_obst_width = static_cast<ObstacleRectangle*>((*m_obstacles)[m_prev_obst_index])->getWidth();
+        prev_obst_right = prev_obst_left + prev_obst_width;
+        prev_obst_spacing = (*m_obstacles)[m_prev_obst_index]->getSpacing();
+    }
+
+    //Set next "relative ground level" once user ('s left) passes prev obstacle
+    if (get_player_right() > prev_obst_right)
+    {
+        if ((prev_obst_spacing > getWidth() && !m_collision && get_player_right() <= obst_left)
                 || obst_top > m_ground || get_player_top() > obst_bot)
         {
             m_next_relative_ground = m_ground;
@@ -62,20 +73,9 @@ void MovingPlayer::collision_detection()
             m_next_relative_ground = obst_top;
         }
     }
-    else if (m_cur_obst_index == 0 && get_player_right() >= (*m_obstacles)[m_cur_obst_index]->getX())
+    else if (m_cur_obst_index == 0 && get_player_right() >= obst_left)
     {
         m_next_relative_ground = obst_top;
-    }
-
-
-    int prev_obst_left = -1;
-    int prev_obst_width = -1;
-    int prev_obst_right = -1;
-    if (m_prev_obst_index != -1)
-    {
-        prev_obst_left = (*m_obstacles)[m_prev_obst_index]->getX();
-        prev_obst_width = static_cast<ObstacleRectangle*>((*m_obstacles)[m_prev_obst_index])->getWidth();
-        prev_obst_right = prev_obst_left + prev_obst_width;
     }
 
     //Set current GL to next GL once user jumps above it
@@ -112,24 +112,19 @@ void MovingPlayer::collision_detection()
     }
 }
 
-void MovingPlayer::drop_player()
+inline void MovingPlayer::drop_player()
 {
     if (get_player_bottom() - (m_velocity_y - m_gravity) < m_relative_ground)
     {
         m_velocity_y -= m_gravity;
     }
-    //Allow player to be more flush with the ground
-    else if (get_player_bottom() + 1 < m_relative_ground)
-    {
-        m_velocity_y = -1;
-    }
     else
     {
-        m_velocity_y = 0;
+        m_velocity_y = get_player_bottom() - m_relative_ground;
     }
 }
 
-void MovingPlayer::relative_ground_level_detection()
+inline void MovingPlayer::relative_ground_level_detection()
 {
     //Dropping to new relative ground (from stationary y-velocity) level only occurs when not jumping
     if (!m_jumping && m_prev_obst_index != -1)
