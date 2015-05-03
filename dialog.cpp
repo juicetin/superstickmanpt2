@@ -126,7 +126,7 @@ void Dialog::keyPressEvent(QKeyEvent *event)
         }
         //Initiate jump sequence if not currently mid-jmp
         else if (event->key() == Qt::Key_Space
-                   /*&& !m_game->getPlayer()->is_jumping()*/)
+                   && !m_game->getPlayer()->is_jumping())
         {
            m_game->getPlayer()->set_jumping(true);
         }

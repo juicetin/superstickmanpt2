@@ -15,6 +15,7 @@ m_initial_jump_velocity(game_info.initial_jump_velocity)
     m_collision = false;
     m_ground = 487-getSize() + 9*getSize()/1000;
     m_relative_ground = 487-getSize() + 9*getSize()/1000;
+    m_next_relative_ground = m_ground;
     m_prev_obstacle_x_end = m_screen_width;
     m_prev_obstacle = -1;
 }
@@ -73,14 +74,15 @@ void MovingPlayer::jump(bool update_flag, QPainter &painter)
                 //True overlap present
                 if (x_overlap && y_overlap)
                 {
+                   cout << m_label->y()+getSize() <<  m_relative_ground << endl;
                     m_collision = true;
-                    m_relative_ground = obst_y - (m_screen_height - (487-playerSize + 9*playerSize/1000 + playerSize - 9 ));
+                    m_next_relative_ground = obst_y - (m_screen_height - (487-playerSize + 9*playerSize/1000 + playerSize - 9));
                     m_prev_obstacle = i;
                     break;
                 }
                 else if (x_overlap && m_label->y() < obst_y)
                 {
-                    m_relative_ground = obst_y - (m_screen_height - (487-playerSize + 9*playerSize/1000 + playerSize - 9 ));
+                    m_relative_ground = obst_y - (m_screen_height - (487-playerSize + 9*playerSize/1000 + playerSize - 9));
                 }
             }
         }
@@ -88,6 +90,10 @@ void MovingPlayer::jump(bool update_flag, QPainter &painter)
         if (m_prev_obstacle != -1)
         {
             m_prev_obstacle_x_end = (*m_obstacles)[m_prev_obstacle]->getX() + obst_width;
+        }
+        if (m_label->y() <= m_next_relative_ground && m_velocity_y < 0)
+        {
+            m_relative_ground = m_next_relative_ground;
         }
 
         //TODO Hard coded - will need to change for obstacle detection
@@ -107,25 +113,31 @@ void MovingPlayer::jump(bool update_flag, QPainter &painter)
             m_velocity_y = 0;
         }
 
-        if (y_overlap)
-        {
-//            cout << "no overlap with ground " << m_relative_ground << endl;
-            cout << m_label->y() + getSize() << " " << obst_y << endl;
-        }
-        if (!m_jumping && m_label->x() > m_prev_obstacle_x_end + 10)
-        {
-//            std::cout << m_relative_ground << " " << m_prev_obstacle << std::endl;
-            int new_velocity = m_velocity_y  - m_gravity;
-            if (m_label->y() - new_velocity < m_relative_ground)
-            {
-                m_velocity_y -= m_gravity;
-            }
-//            else
-//            {
-//                m_velocity_y = m_relative_ground - m_label->y() - 10;
-//                m_velocity_y = 0;
-//            }
-        }
+         if (x_overlap && y_overlap)
+         {
+ //            cout << "overlap with ground " << m_relative_ground << endl;
+ //            cout << m_label->y() + getSize() << " " << obst_y << endl;
+         }
+         if (!m_jumping && m_label->x() > m_prev_obstacle_x_end + 15)
+         {
+             if (!x_overlap && !y_overlap)
+             {
+                 cout << "here" << endl;
+                 m_relative_ground = m_ground;
+             }
+ //            std::cout << m_relative_ground << " " << m_prev_obstacle << std::endl;
+             int new_velocity = m_velocity_y  - m_gravity;
+             if (m_label->y() - new_velocity < m_relative_ground)
+             {
+                 m_velocity_y -= m_gravity;
+             }
+             else
+             {
+                 m_velocity_y = 0;
+                 m_label->move(m_label->x(), m_relative_ground);
+ //                cout << "here" << endl;
+             }
+         }
 
         m_label->move(m_label->x(), m_label->y() - m_velocity_y);
     }

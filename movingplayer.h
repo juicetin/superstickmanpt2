@@ -31,7 +31,7 @@ protected:
 
     int m_ground;
     int m_relative_ground;
-    int m_prev_relative_ground;
+    int m_next_relative_ground;
     int m_initial_jump_velocity;
 
     int m_prev_obstacle_x_end;
