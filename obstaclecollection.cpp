@@ -15,7 +15,7 @@ m_game_info(game_info)
             m_obstacles.pop_back();
     }
 
-    int obstacle_loop_length = 0;
+    int obstacle_loop_length = static_cast<ObstacleRectangle*>(m_obstacles[0])->getWidth();
     m_obstacles[0]->setX(m_width);
     int vector_length = m_obstacles.size();
     for (int i = 1; i < vector_length; ++i)
@@ -25,6 +25,7 @@ m_game_info(game_info)
         m_obstacles[i]->setX(m_obstacles[i-1]->getX() + prev_spacing + prev_width);
         obstacle_loop_length += prev_spacing + prev_width;
     }
+    m_obstacles[obstacles_vector.size()-1]->setSpacing(obstacle_loop_length - m_width);
     m_game_info.obstacle_loop_length = obstacle_loop_length;
 }
 

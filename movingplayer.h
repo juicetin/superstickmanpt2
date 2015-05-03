@@ -23,6 +23,11 @@ public:
 
     bool * get_collision();
 
+    int get_player_bottom();
+    int get_player_right();
+    int get_player_left();
+    int get_player_top();
+
 protected:
     int m_velocity_y;
     int m_gravity;
@@ -35,7 +40,9 @@ protected:
     int m_initial_jump_velocity;
 
     int m_prev_obstacle_x_end;
-    int m_prev_obstacle;
+    int m_prev_obst_index;
+    int m_cur_obst_index;
+    int m_obst_count;
 
     bool m_jumping;
     bool m_collision;

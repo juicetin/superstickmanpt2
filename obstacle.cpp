@@ -26,3 +26,8 @@ void Obstacle::setX(int x)
 {
 	m_x = x;
 }
+
+void Obstacle::setSpacing(int spacing)
+{
+	m_spacing = spacing;
+}

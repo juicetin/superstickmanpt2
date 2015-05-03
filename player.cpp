@@ -71,7 +71,7 @@ void Player::beginPlayerAnimation(QWidget * dialog)
     m_playerAnimation->setScaledSize(QSize(playerSize, playerSize));
 
     //The second argument here is to account for the gap between the GIFs feet and the bottom of the image
-    m_label->setGeometry(m_initialXPosition, 487-playerSize + 9*playerSize/1000, 150, playerSize);
+    m_label->setGeometry(m_initialXPosition, 487-playerSize + 9*playerSize/1000, 130, playerSize);
     m_label->setMovie(m_playerAnimation);
     m_playerAnimation->setSpeed(300);
     m_playerAnimation->start();
