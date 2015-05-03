@@ -127,6 +127,7 @@ void Dialog::keyPressEvent(QKeyEvent *event)
     if (!m_paused) {
         std::string jump_flag = m_FileIO->getValues("jump-flag");
 
+        //Move left and right
         if (event->key() == Qt::Key_Period)
         {
             m_game->getPlayer()->m_moving_player.movePlayerX(2);
@@ -135,12 +136,23 @@ void Dialog::keyPressEvent(QKeyEvent *event)
         {
             m_game->getPlayer()->m_moving_player.movePlayerX(-2);
         }
+
         //Initiate jump sequence if not currently mid-jmp
         else if (event->key() == Qt::Key_Space
-                   && !m_game->getPlayer()->m_moving_player.is_jumping()
+                   && m_game->getPlayer()->m_moving_player.is_jumping() < m_game->getPlayer()->m_moving_player.available_jumps()
                    && strcmp(jump_flag.c_str(), "on") == 0)
         {
-           m_game->getPlayer()->m_moving_player.set_jumping(true);
+           m_game->getPlayer()->m_moving_player.set_jumping(m_game->getPlayer()->m_moving_player.is_jumping()+1);
+        }
+
+        //Control number of jumps available
+        else if (event->key() == Qt::Key_Equal)
+        {
+            m_game->getPlayer()->m_moving_player.increment_jumps(1);
+        }
+        else if (event->key() == Qt::Key_Minus)
+        {
+            m_game->getPlayer()->m_moving_player.increment_jumps(-1);
         }
     }
 }

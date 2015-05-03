@@ -214,9 +214,9 @@ void FileIO::saveGame(Game * game)
     outStream << "--sizes availble are tiny, normal, large, giant" << std::endl;
     outStream << "player-size=" << configValues["player-size"] << std::endl;
     outStream << "x-initial=" << configValues["x-initial"] << std::endl;
-
     outStream << "initial-jump-velocity=" << configValues["initial-jump-velocity"] << std::endl;
-    outStream << "gravity=" << configValues["gravity"] << std::endl << std::endl;
+    outStream << "gravity=" << configValues["gravity"] << std::endl;
+    outStream << "jumps=" << configValues["jumps"] << std::endl << std::endl;
 
     outStream << "[Stage 2]" << std::endl;
     outStream << "obstacle-flag=" << configValues["obstacle-flag"] << std::endl;

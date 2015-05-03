@@ -12,6 +12,7 @@ struct game_info{
     int gravity;
     int obstacle_speed;
     int obstacle_loop_length;
+    int jumps;
     std::string image_path;
     std::string size;
 }; typedef struct game_info gameInfo;

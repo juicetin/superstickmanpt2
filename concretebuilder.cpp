@@ -31,6 +31,7 @@ MovingPlayerProxy * ConcreteBuilder::buildPlayer()
     game_info.initial_jump_velocity = atoi(gb_fileReader->getValues("initial-jump-velocity"));
     game_info.gravity = atoi(gb_fileReader->getValues("gravity"));
     game_info.y_dimension = atoi(gb_fileReader->getValues("y-dimension"));
+    game_info.jumps = atoi(gb_fileReader->getValues("jumps"));
 
     return new MovingPlayerProxy(game_info);
 }

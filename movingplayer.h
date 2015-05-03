@@ -15,8 +15,9 @@ public:
     MovingPlayer(gameInfo game_info);
     ~MovingPlayer();
 
-    void set_jumping(bool asc_desc);
-    bool is_jumping();
+    void set_jumping(int asc_desc);
+    int is_jumping();
+    int available_jumps();
     void jump(bool update_flag, QPainter &painter);
 
     void set_obstacle_list_pointer(std::vector<Obstacle*> * obstacles);
@@ -31,6 +32,8 @@ public:
     int get_player_right();
     int get_player_left();
     int get_player_top();
+
+    void increment_jumps(int increment);
 
 protected:
     int m_velocity_y;
@@ -48,7 +51,8 @@ protected:
     int m_cur_obst_index;
     int m_obst_count;
 
-    bool m_jumping;
+    int m_jumping;
+    int m_jumps;
     bool m_collision;
     gameInfo current_obstacle;
     std::vector<Obstacle*> * m_obstacles;

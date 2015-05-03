@@ -17,6 +17,7 @@ public:
 protected:
 	int m_height;
 	int m_width;
+    bool m_fall;
 };
 
 #endif // OBSTACLERECTANGLE_H
