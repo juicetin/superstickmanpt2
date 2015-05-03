@@ -67,13 +67,30 @@ void MovingPlayer::collision_detection()
         m_next_relative_ground = obst_top;
     }
 
+
+    int prev_obst_left = -1;
+    int prev_obst_width = -1;
+    int prev_obst_right = -1;
+    if (m_prev_obst_index != -1)
+    {
+        prev_obst_left = (*m_obstacles)[m_prev_obst_index]->getX();
+        prev_obst_width = static_cast<ObstacleRectangle*>((*m_obstacles)[m_prev_obst_index])->getWidth();
+        prev_obst_right = prev_obst_left + prev_obst_width;
+    }
+
     //Set current GL to next GL once user jumps above it
     if (m_velocity_y <= 0   //Falling
             && get_player_bottom() < m_next_relative_ground     //Above the obstacle
-            && ((get_player_right() > obst_left && m_next_relative_ground != m_ground)
-            || (m_next_relative_ground == m_ground && m_prev_obst_index != -1
-            && get_player_left() > (*m_obstacles)[m_prev_obst_index]->getX()
-            + static_cast<ObstacleRectangle*>((*m_obstacles)[m_prev_obst_index])->getWidth())))
+            && ((get_player_right() > obst_left &&              //Ascending obstacles
+                 m_next_relative_ground != m_ground &&
+                 m_relative_ground > m_next_relative_ground)
+                || (get_player_right() > obst_left &&           //Descending obstacles
+                    m_next_relative_ground != m_ground &&
+                    get_player_left() > prev_obst_right &&
+                    m_relative_ground < m_next_relative_ground )
+                || (m_next_relative_ground == m_ground &&       //Ground level between obstacles
+                    m_prev_obst_index != -1 &&
+                    get_player_left() > prev_obst_right)))
     {
         m_relative_ground = m_next_relative_ground;
         m_collision = false;
@@ -101,14 +118,15 @@ void MovingPlayer::drop_player()
     {
         m_velocity_y -= m_gravity;
     }
-//    else if (get_player_bottom() + 1 < m_relative_ground)
-//    {
-//        m_velocity_y = -1;
-//    }
-//    else
-//    {
-//        m_velocity_y = 0;
-//    }
+    //Allow player to be more flush with the ground
+    else if (get_player_bottom() + 1 < m_relative_ground)
+    {
+        m_velocity_y = -1;
+    }
+    else
+    {
+        m_velocity_y = 0;
+    }
 }
 
 void MovingPlayer::relative_ground_level_detection()
