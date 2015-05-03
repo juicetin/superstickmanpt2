@@ -101,14 +101,14 @@ void MovingPlayer::drop_player()
     {
         m_velocity_y -= m_gravity;
     }
-    else if (get_player_bottom() + 1 < m_relative_ground)
-    {
-        m_velocity_y = -1;
-    }
-    else
-    {
-        m_velocity_y = 0;
-    }
+//    else if (get_player_bottom() + 1 < m_relative_ground)
+//    {
+//        m_velocity_y = -1;
+//    }
+//    else
+//    {
+//        m_velocity_y = 0;
+//    }
 }
 
 void MovingPlayer::relative_ground_level_detection()
@@ -136,7 +136,11 @@ void MovingPlayer::jump(bool update_flag, QPainter &painter)
 {
     if (update_flag)
     {
-        collision_detection();
+        
+        if ((*m_obstacles).size() > 0)
+        {
+            collision_detection();
+        }
 
         if (m_jumping)
         {
@@ -155,8 +159,11 @@ void MovingPlayer::jump(bool update_flag, QPainter &painter)
             m_jumping = false;
         }
 
-        relative_ground_level_detection();
-
+        if ((*m_obstacles).size() > 0)
+        {
+            relative_ground_level_detection();
+        }
+        
         m_label->move(m_label->x(), m_label->y() - m_velocity_y);
     }
 }

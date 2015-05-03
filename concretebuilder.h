@@ -19,7 +19,7 @@ public:
 
     virtual Game * buildGame();
 
-    virtual ObstacleCollection * buildObstacles();
+    // virtual ObstacleCollection * buildObstacles();
 
     Game * getGame();
     FileIO * getFileIO();

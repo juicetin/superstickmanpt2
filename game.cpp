@@ -1,9 +1,8 @@
 #include "game.h"
 
-Game::Game(ObstacleCollection * obstacles, MovingPlayer * player, Background * background, int xDimension, int yDimension)
+Game::Game(MovingPlayer * player, Background * background, int xDimension, int yDimension)
     : m_player(player),
       m_background(background),
-      m_obstacles(obstacles),
       m_xDimension(xDimension),
       m_yDimension(yDimension)
 {
@@ -56,4 +55,7 @@ void Game::setYDimension(const int &yDimension)
     m_yDimension = yDimension;
 }
 
-
+void Game::setObstacles(ObstacleCollection * obstacles)
+{
+    m_obstacles = obstacles;
+}

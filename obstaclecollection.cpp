@@ -2,12 +2,16 @@
 
 #include "obstaclecollection.h"
 
-#include <cstdio>
+#include <iostream>
 
 ObstacleCollection::ObstacleCollection(std::vector<std::map<std::string, int > > obstacles_vector, gameInfo game_info) :
 m_speed(game_info.obstacle_speed), m_width(game_info.x_dimension), m_height(game_info.y_dimension),
 m_game_info(game_info)
 {
+    if (obstacles_vector.size() == 0)
+    {
+        return;
+    }
 	for (int i = 0; i < obstacles_vector.size(); ++i)
     {
         m_obstacles.push_back(ObstacleFactory::create(obstacles_vector[i], &m_game_info));

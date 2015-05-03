@@ -25,7 +25,6 @@ SOURCES += main.cpp\
     obstaclecollection.cpp \
     obstaclerectangle.cpp \
     obstaclefactory.cpp \
-    collisionengine.cpp
 
 HEADERS  += dialog.h \
     fileio.h \
@@ -44,6 +43,5 @@ HEADERS  += dialog.h \
     obstacleinfo.h \
     obstaclefactory.h \
     renderableobject.h \
-    collisionengine.h
 
 FORMS    += dialog.ui

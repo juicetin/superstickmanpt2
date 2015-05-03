@@ -10,6 +10,7 @@
 
 #include "game.h"
 #include "fileio.h"
+#include "gameinfo.h"
 
 namespace Ui {
 class Dialog;

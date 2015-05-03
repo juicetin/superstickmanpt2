@@ -9,7 +9,7 @@
 class Game
 {
 public:
-    Game(ObstacleCollection * obstacles, MovingPlayer * player, Background * background, int xDimension, int yDimension);
+    Game(MovingPlayer * player, Background * background, int xDimension, int yDimension);
     ~Game();
 
     MovingPlayer * getPlayer();
@@ -21,6 +21,7 @@ public:
     const int& getYDimension() const;
     void setYDimension(const int& yDimension);
 
+    void setObstacles(ObstacleCollection * obstacles);
     ObstacleCollection * getObstacles();
 
 protected:

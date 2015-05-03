@@ -53,6 +53,14 @@ void Dialog::setGame(Game *game)
     setSize(m_game->getXDimension(), m_game->getYDimension());
     m_game->getPlayer()->beginPlayerAnimation(this);
 
+
+
+    gameInfo game_info;
+    game_info.obstacle_speed = atoi(m_FileIO->getValues("background-speed"));
+    game_info.x_dimension = atoi(m_FileIO->getValues("x-dimension"));
+    game_info.y_dimension = atoi(m_FileIO->getValues("y-dimension"));
+    m_game->setObstacles(new ObstacleCollection(m_FileIO->getObstacleProperties(), game_info));
+
     m_game->getPlayer()->set_obstacle_list_pointer(
                 m_game->getObstacles()->getObstacles());
 
@@ -61,6 +69,7 @@ void Dialog::setGame(Game *game)
 
     m_game->getObstacles()->setCollision(
         m_game->getPlayer()->get_collision());
+
 }
 
 void Dialog::setFileIO(FileIO *fileReader)
@@ -116,6 +125,8 @@ void Dialog::keyPressEvent(QKeyEvent *event)
     }
 
     if (!m_paused) {
+        std::string jump_flag = m_FileIO->getValues("jump-flag");
+
         if (event->key() == Qt::Key_Period)
         {
             m_game->getPlayer()->movePlayerX(2);
@@ -126,7 +137,8 @@ void Dialog::keyPressEvent(QKeyEvent *event)
         }
         //Initiate jump sequence if not currently mid-jmp
         else if (event->key() == Qt::Key_Space
-                   && !m_game->getPlayer()->is_jumping())
+                   && !m_game->getPlayer()->is_jumping()
+                   && strcmp(jump_flag.c_str(), "on") == 0)
         {
            m_game->getPlayer()->set_jumping(true);
         }
@@ -140,7 +152,12 @@ void Dialog::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     m_game->getPlayer()->jump(m_update_flag, painter);
     m_game->getBackground()->renderBackground(m_update_flag, painter, !m_paused);
-    m_game->getObstacles()->renderObstacles(m_update_flag, painter, !m_paused);
+
+    std::string obst_flag = m_FileIO->getValues("obstacle-flag");
+    if (strcmp(obst_flag.c_str(), "on") == 0)
+    {
+        m_game->getObstacles()->renderObstacles(m_update_flag, painter, !m_paused);
+    }
     m_update_flag = false;
     m_counter++;
 }

@@ -26,8 +26,8 @@ GameEngine::~GameEngine()
 void GameEngine::start()
 {
     g_builder->buildGame();
-    g_window->setGame(g_builder->getGame());
     g_window->setFileIO(g_builder->getFileIO());
+    g_window->setGame(g_builder->getGame());
     g_window->show();
 }
 

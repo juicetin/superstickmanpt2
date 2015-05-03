@@ -34,7 +34,7 @@ MovingPlayer * ConcreteBuilder::buildPlayer()
     return new MovingPlayer(game_info);
 }
 
-//Fetches values from FileIO object and constructs Background object
+// //Fetches values from FileIO object and constructs Background object
 Background * ConcreteBuilder::buildBackground()
 {
     std::string imagePath = gb_fileReader->getValues("background-image");
@@ -49,19 +49,19 @@ Game * ConcreteBuilder::buildGame()
     int xDimension = atoi(gb_fileReader->getValues("x-dimension"));
     int yDimension = atoi(gb_fileReader->getValues("y-dimension"));
 
-    return new Game(buildObstacles(), buildPlayer(), buildBackground(), xDimension, yDimension);
+    return new Game(buildPlayer(), buildBackground(), xDimension, yDimension);
 }
 
-ObstacleCollection * ConcreteBuilder::buildObstacles()
-{
-    gameInfo game_info;
-    game_info.obstacle_speed = atoi(gb_fileReader->getValues("obstacle-speed"));
-    game_info.x_dimension = atoi(gb_fileReader->getValues("x-dimension"));
-    game_info.y_dimension = atoi(gb_fileReader->getValues("y-dimension"));
-    std::cout << "lelfail" << std::endl;
-    if (!gb_fileReader->getObstacleProperties().empty())
-        return new ObstacleCollection(gb_fileReader->getObstacleProperties(), game_info);
-}
+//ObstacleCollection * ConcreteBuilder::buildObstacles()
+//{
+//    gameInfo game_info;
+//    game_info.obstacle_speed = atoi(gb_fileReader->getValues("obstacle-speed"));
+//    game_info.x_dimension = atoi(gb_fileReader->getValues("x-dimension"));
+//    game_info.y_dimension = atoi(gb_fileReader->getValues("y-dimension"));
+//    std::cout << "lelfail" << std::endl;
+//    if (!gb_fileReader->getObstacleProperties().empty())
+//        return new ObstacleCollection(gb_fileReader->getObstacleProperties(), game_info);
+//}
 
 //Returns a pointer to the Game object
 Game * ConcreteBuilder::getGame()

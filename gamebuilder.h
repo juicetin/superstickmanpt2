@@ -19,7 +19,7 @@ public:
     virtual Background * buildBackground() = 0;
     virtual Game * buildGame() = 0;
 
-    virtual ObstacleCollection * buildObstacles() = 0;
+    // virtual ObstacleCollection * buildObstacles() = 0;
 
     virtual Game * getGame() = 0;
     virtual FileIO * getFileIO() = 0;
