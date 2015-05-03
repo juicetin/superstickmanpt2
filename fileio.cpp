@@ -239,6 +239,10 @@ void FileIO::saveGame(Game * game)
         std::string height = m_obstaclesProperties[i]["height"];
         std::string width = m_obstaclesProperties[i]["width"];
         std::string spacing = m_obstaclesProperties[i]["spacing"];
-        outStream << "type:" << type << ",start-y:" << start_y << ",height:" << height << ",width:" << width << ",spacing:" << spacing << std::endl;
+        std::string color = m_obstaclesProperties[i]["color"];
+        outStream << "type:" << type << ",start-y:" << start_y
+                  << ",height:" << height << ",width:" << width
+                  << ",spacing:" << spacing << ",color:" << color
+                  << std::endl;
     }
 }

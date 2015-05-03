@@ -4,7 +4,7 @@ ObstacleRectangle::ObstacleRectangle(obstacleInfo obstacle_info, gameInfo *game_
 Obstacle(obstacle_info, game_info),
 m_height(obstacle_info.height), m_width(obstacle_info.width)
 {
-    m_fall = true;
+
 }
 
 int ObstacleRectangle::getHeight() const
@@ -27,23 +27,6 @@ void ObstacleRectangle::updatePosition()
 	{
 		m_x -= m_game_info->obstacle_speed;
     }
-
-//    if (m_fall && m_y + m_height < (*m_game_info).y_dimension)
-//    {
-//        m_y += 1;
-//    }
-//    else if (m_fall && m_y + m_height == (*m_game_info).y_dimension)
-//    {
-//        m_fall = false;
-//    }
-//    else if (!m_fall && m_y > 0)
-//    {
-//        m_y -= 1;
-//    }
-//    else if (!m_fall && m_y == 0)
-//    {
-//        m_fall = true;
-//    }
 }
 
 void ObstacleRectangle::draw(QPainter &painter, bool collision)
