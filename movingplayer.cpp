@@ -61,7 +61,6 @@ void MovingPlayer::collision_detection()
         {
             m_next_relative_ground = obst_top;
         }
-//        cout << m_relative_ground << " " << counter++ << endl;
     }
     else if (m_cur_obst_index == 0 && get_player_right() >= (*m_obstacles)[m_cur_obst_index]->getX())
     {
@@ -69,7 +68,12 @@ void MovingPlayer::collision_detection()
     }
 
     //Set current GL to next GL once user jumps above it
-    if (m_velocity_y >= 0 && get_player_bottom() < m_next_relative_ground)
+    if (m_velocity_y <= 0   //Falling
+            && get_player_bottom() < m_next_relative_ground     //Above the obstacle
+            && ((get_player_right() > obst_left && m_next_relative_ground != m_ground)
+            || (m_next_relative_ground == m_ground && m_prev_obst_index != -1
+            && get_player_left() > (*m_obstacles)[m_prev_obst_index]->getX()
+            + static_cast<ObstacleRectangle*>((*m_obstacles)[m_prev_obst_index])->getWidth())))
     {
         m_relative_ground = m_next_relative_ground;
         m_collision = false;
@@ -97,14 +101,14 @@ void MovingPlayer::drop_player()
     {
         m_velocity_y -= m_gravity;
     }
-//    else if (get_player_bottom() + 1 < m_relative_ground)
-//    {
-//        m_velocity_y = -1;
-//    }
-//    else
-//    {
-//        m_velocity_y = 0;
-//    }
+    else if (get_player_bottom() + 1 < m_relative_ground)
+    {
+        m_velocity_y = -1;
+    }
+    else
+    {
+        m_velocity_y = 0;
+    }
 }
 
 void MovingPlayer::relative_ground_level_detection()

@@ -58,8 +58,9 @@ ObstacleCollection * ConcreteBuilder::buildObstacles()
     game_info.obstacle_speed = atoi(gb_fileReader->getValues("obstacle-speed"));
     game_info.x_dimension = atoi(gb_fileReader->getValues("x-dimension"));
     game_info.y_dimension = atoi(gb_fileReader->getValues("y-dimension"));
-
-    return new ObstacleCollection(gb_fileReader->getObstacleProperties(), game_info);
+    std::cout << "lelfail" << std::endl;
+    if (!gb_fileReader->getObstacleProperties().empty())
+        return new ObstacleCollection(gb_fileReader->getObstacleProperties(), game_info);
 }
 
 //Returns a pointer to the Game object
