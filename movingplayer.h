@@ -26,11 +26,17 @@ public:
 protected:
     int m_velocity_y;
     int m_gravity;
-    int m_screen_height;
     int m_screen_width;
+    int m_screen_height;
+
     int m_ground;
     int m_relative_ground;
+    int m_prev_relative_ground;
     int m_initial_jump_velocity;
+
+    int m_prev_obstacle_x_end;
+    int m_prev_obstacle;
+
     bool m_jumping;
     bool m_collision;
     gameInfo current_obstacle;

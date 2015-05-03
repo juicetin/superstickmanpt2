@@ -208,5 +208,29 @@ void FileIO::saveGame(Game * game)
     outStream << "player-size=" << configValues["player-size"] << std::endl;
     outStream << "x-initial=" << configValues["x-initial"] << std::endl;
 
+    outStream << "initial-jump-velocity=" << configValues["initial-jump-velocity"] << std::endl;
+    outStream << "gravity=" << configValues["gravity"] << std::endl << std::endl;
 
+    outStream << "[Obstacles]" << std::endl;
+    outStream << "obstacle-speed=" << configValues["obstacle-speed"] << std::endl << std::endl; 
+
+    outStream << "[Obstacle-list]" << std::endl;
+
+    outStream << "--Order of the properties can be given in any order, so long as all are present." << std::endl <<
+                "--All shapes require a type, start-y, and spacing, as a minimum." << std::endl <<
+                "--(Note that the spacing on the last obstacle is ignored.)" << std::endl <<
+                "--The following types of shapes are available:" << std::endl <<
+                "--0(rectangle)" << std::endl <<
+                "--Shapes have the following additional requirements:" << std::endl <<
+                "--Rectangle - height, width" << std::endl;
+
+    for (int i = 0; i < m_obstaclesProperties.size(); ++i)
+    {
+        int type = m_obstaclesProperties[i]["type"];
+        int start_y = m_obstaclesProperties[i]["start-y"];
+        int height = m_obstaclesProperties[i]["height"];
+        int width = m_obstaclesProperties[i]["width"];
+        int spacing = m_obstaclesProperties[i]["spacing"];
+        outStream << "type:" << type << ",start-y:" << start_y << ",height:" << height << ",width:" << width << ",spacing:" << spacing << std::endl;
+    }
 }

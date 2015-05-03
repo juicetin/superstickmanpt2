@@ -23,7 +23,7 @@ m_game_info(game_info)
         int prev_spacing = m_obstacles[i-1]->getSpacing();
         int prev_width = static_cast<ObstacleRectangle*>(m_obstacles[i-1])->getWidth();
         m_obstacles[i]->setX(m_obstacles[i-1]->getX() + prev_spacing + prev_width);
-        obstacle_loop_length += prev_spacing;
+        obstacle_loop_length += prev_spacing + prev_width;
     }
     m_game_info.obstacle_loop_length = obstacle_loop_length;
 }
